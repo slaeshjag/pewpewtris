@@ -17,7 +17,7 @@ struct block_struct block_rotate(struct block_struct bs) {
 
 struct block_struct block_new() {
 	struct block_struct bs;
-	int block, *src;
+	char block, *src;
 
 	block = rand() % 7;
 
@@ -46,6 +46,7 @@ struct block_struct block_new() {
 	}
 
 	memcpy(bs.blocks, src, 16);
+	bs.first_check = 1;
 	/* TODO: Add block id */
 
 	return bs;

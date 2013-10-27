@@ -3,14 +3,14 @@
 
 #ifdef REQUIRE_DATA
 
-int block_0[] = {
+char block_0[] = {
 	0, 0, 1, 0,
 	0, 0, 1, 0,
 	0, 0, 1, 0,
 	0, 0, 1, 0
 };
 
-int block_1[] = {
+char block_1[] = {
 	0, 0, 0, 0,
 	1, 1, 0, 0,
 	0, 1, 1, 0,
@@ -18,7 +18,7 @@ int block_1[] = {
 };
 
 
-int block_2[] = {
+char block_2[] = {
 	0, 0, 0, 0,
 	0, 0, 1, 1,
 	0, 1, 1, 0,
@@ -26,14 +26,14 @@ int block_2[] = {
 };
 
 
-int block_3[] = {
+char block_3[] = {
 	0, 0, 0, 0,
 	0, 1, 1, 0,
 	0, 1, 1, 0,
 	0, 0, 0, 0
 };
 
-int block_4[] = {
+char block_4[] = {
 	0, 0, 0, 0,
 	0, 1, 0, 0,
 	1, 1, 1, 0,
@@ -41,14 +41,14 @@ int block_4[] = {
 };
 
 
-int block_5[] = {
+char block_5[] = {
 	0, 0, 0, 0,
 	0, 0, 0, 1,
 	0, 1, 1, 1,
 	0, 0, 0, 0
 };
 
-int block_6[] = {
+char block_6[] = {
 	0, 0, 0, 0,
 	1, 0, 0, 0,
 	1, 1, 1, 0,
@@ -60,6 +60,7 @@ int block_6[] = {
 struct block_struct {
 	char		blocks[16];
 	int		box_id[4];
+	int		first_check;
 };
 
 struct block_struct block_new();
