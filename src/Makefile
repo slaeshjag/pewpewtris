@@ -4,6 +4,7 @@ OUTBIN		=	../bin/pewpewtris.elf
 
 DEPENDS		=
 
+CFLAGS		+=	-O0 -g
 LDFLAGS		+=	-ldarnit
 SRCFILES	=	$(wildcard *.c)
 OBJFILES	=	$(SRCFILES:.c=.o)

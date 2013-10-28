@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "block.h"
+#include "ai.h"
 
 
 struct {
@@ -18,6 +19,9 @@ struct {
 	struct block_struct		falling;
 } ppt;
 
+
+void check_topography_falling(int buf[4]);
+void check_topography_tm(int *buf, int size, int x);
 
 
 #endif

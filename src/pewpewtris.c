@@ -16,6 +16,7 @@ void get_new_block() {
 	
 	ppt.falling = bs;
 	ppt.bs_x = ppt.bs_y = 0;
+	ai_find_best_spot();
 
 	return;
 }
@@ -33,14 +34,15 @@ void check_topography_falling(int buf[4]) {
 }
 
 
-void check_topography_tm(int buf[4], int x) {
+void check_topography_tm(int *buf, int size, int x) {
 	int i, j, k;
 
-	buf[0] = buf[1] = buf[2] = buf[3] = -1;
+	for (i = 0; i < size; i++)
+		buf[i] = -1;
 
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < size; i++) {
 		if (i + x >= 10) {
-			buf[j++] = 1;
+			buf[i] = 1;
 			continue;
 		}
 		
@@ -57,7 +59,7 @@ void check_topography_tm(int buf[4], int x) {
 
 void move_block() {
 	int top[4], block[4], i, j;
-	ppt.bs_y += 4;
+	ppt.bs_y += 1;
 
 //	for (i = j = 0; i < 16; i++)
 //		if (ppt.falling.blocks[i])
@@ -65,8 +67,10 @@ void move_block() {
 
 	if (ppt.bs_y % 24 == 0 || ppt.falling.first_check) {
 		check_topography_falling(block);
-		check_topography_tm(top, ppt.bs_x / 24);
-		for (i = 0; i < 4; i++)
+		check_topography_tm(top, 4, ppt.bs_x / 24);
+		for (i = 0; i < 4; i++) {
+			if (ppt.bs_x / 24 + i < 0 || ppt.bs_x / 24 + i >= 10)
+				continue;
 			if (ppt.bs_y / 24 + 1 + block[i] >= top[i]) {
 				if (ppt.falling.first_check) {
 					d_quit();
@@ -80,6 +84,7 @@ void move_block() {
 				get_new_block();
 				return;
 			}
+		}
 		ppt.falling.first_check = 0;
 	}
 
