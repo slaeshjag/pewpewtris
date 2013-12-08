@@ -6,6 +6,10 @@ void get_new_block() {
 	int i, j;
 
 	bs = block_new();
+	ppt.falling = bs;
+	ppt.bs_x = ppt.bs_y = 0;
+	ai_determine_best_move();
+	bs = ppt.falling;
 	for (i = j = 0; i < 16; i++) {
 		if (bs.blocks[i]) {
 			d_render_tile_set(ppt.tile, j, 1);
@@ -14,9 +18,6 @@ void get_new_block() {
 		}
 	}
 	
-	ppt.falling = bs;
-	ppt.bs_x = ppt.bs_y = 0;
-	ai_find_best_spot();
 
 	return;
 }
@@ -26,7 +27,7 @@ void check_topography_falling(int buf[4]) {
 	int i, j;
 
 	for (i = 0; i < 4; i++)
-		buff[i] = -1;
+		buf[i] = -1;
 	
 	for (i = j = 0; i < 16; i++)
 		if (ppt.falling.blocks[i])

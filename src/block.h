@@ -64,5 +64,6 @@ struct block_struct {
 };
 
 struct block_struct block_new();
+struct block_struct block_rotate(struct block_struct bs);
 
 #endif

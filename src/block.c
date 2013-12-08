@@ -6,12 +6,11 @@ struct block_struct block_rotate(struct block_struct bs) {
 	struct block_struct bs_new;
 	int i;
 
-	memset(bs.blocks, 0, 16);
-	for (i = 0; i < 16; i++) {
-		/* TODO: Implement. Short on time */
-	}
+	bs_new = bs;
+	for (i = 0; i < 16; i++)
+		bs_new.blocks[((i & 0x3) << 2) + (i >> 2)] = bs.blocks[i];
 	
-	return bs;
+	return bs_new;
 }
 
 
