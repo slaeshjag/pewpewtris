@@ -25,7 +25,8 @@ void get_new_block() {
 void check_topography_falling(int buf[4]) {
 	int i, j;
 
-	memset(buf, 0, 16);
+	for (i = 0; i < 4; i++)
+		buff[i] = -1;
 	
 	for (i = j = 0; i < 16; i++)
 		if (ppt.falling.blocks[i])
@@ -70,6 +71,8 @@ void move_block() {
 		check_topography_tm(top, 4, ppt.bs_x / 24);
 		for (i = 0; i < 4; i++) {
 			if (ppt.bs_x / 24 + i < 0 || ppt.bs_x / 24 + i >= 10)
+				continue;
+			if (block[i] == -1)
 				continue;
 			if (ppt.bs_y / 24 + 1 + block[i] >= top[i]) {
 				if (ppt.falling.first_check) {
