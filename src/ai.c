@@ -1,60 +1,68 @@
 #include "pewpewtris.h"
 
 
-void ai_find_best_spot() {
-	int top[10], block[4];
-	int i, j, s, q, a, b, c, d, e, m, r;
-
+int ai_rate_spot(int index) {
+	int top[10], block[4], score[4];
+	int i, s, q, min, match;
+	
 	check_topography_falling(block);
 	check_topography_tm(top, 10, 0);
 	for (i = 0; i < 4; i++)
 		if (block[i])
 			break;
 	s = i;
-	fprintf(stderr, "Detected s=%i\n", s);
 	for (i = 0; i < 4; i++)
 		if (block[i])
 			q = i;
-	c = d = e = 0;
-	for (i = -s; i < 13 - q; i++) {
-		a = b = 0;
-		m = 18;
-		for (j = 0; j < 4; j++) {
-			if (i + j < 0 || i + j >= 10)
-				continue;
-			m = (m < top[i + j]) ? m : top[i + j];
-		}
+	index -= s;
+	if (index + q >= 10)
+		return -1;
 
-		fprintf(stderr, "m=%i\n", m);
-		r = 0;
-		for (j = 3; j >= 0; j--)
-			if (block[j])
-				r = (r < block[j]) ? block[j] : r;
-		m -= (r);
-		fprintf(stderr, "New n=%i\n", m);
-		for (j = 0; j < 4; j++) {
-			if (i + j < 0)
-				continue;
-			if (i + j >= 10)
-				continue;
-			if (!block[j])
-				continue;
-			if (block[j] + m == top[i + j]) {
-				fprintf(stderr, "a++ @ %i %i (%i + %i == %i)\n", i, j, block[j], m, top[i + j]);
-				a++;
-			} else if (block[j] + m == top[i + j] - 1) {
-				fprintf(stderr, "b++ @ %i %i (%i + %i == %i)\n", i, j, block[j], m, top[i + j] - 1);
-				b++;
-			}
-		}
-
-		if (a > c || a == c && b > d) {
-			fprintf(stderr, "Better!\n");
-			c = a, d = b, e = i;
-		}
+	min = 18;
+	/* Check 4 spots on the main area */
+	for (i = 0; i < 4; i++) {
+		if (index + i < 0)
+			continue;
+		if (index + i >= 10)
+			continue;
+		if (!block[i])
+			continue;
+		score[i] = top[index + i] - block[i];
+		if (score[i] < min)
+			min = score[i];
 	}
 
-	fprintf(stderr, "Match: %i %i @ %i\n", c, d, e);
-	ppt.bs_x = e * 24;
+	/* Determine score match */
+	for (i = match = 0; i < 4; i++)
+		if (score[i] == min)
+			match++;
+
+	/* Use this as score */
+	return match * min;
+}
+
+
+void ai_find_best_spot() {
+	int score[10], block[4];
+	int i, max_score, max_i, s;
+
+	max_score = -1;
+	for (i = 0; i < 10; i++) {
+		score[i] = ai_rate_spot(i);
+		if (score[i] > max_score) {
+			max_score = score[i];
+			max_i = i;
+		}
+	}
+	
+	fprintf(stderr, "Index %i best (%i)\n", max_i, max_score);
+
+	check_topography_falling(block);
+	for (i = 0; i < 4; i++)
+		if (block[i])
+			break;
+	s = i;
+	
+	ppt.bs_x = (max_i - s) * 24;
 
 }
