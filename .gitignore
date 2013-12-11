@@ -4,6 +4,7 @@
 *.ldi
 *.so
 *.swp
+res/res
 timelapse/frames
 screenshot.png
 edit.png

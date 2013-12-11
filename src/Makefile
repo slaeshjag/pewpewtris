@@ -1,10 +1,10 @@
-# Project: libDarnit
+include $(TOPDIR)/config.mk
 
 OUTBIN		=	../bin/pewpewtris.elf
 
 DEPENDS		=
 
-CFLAGS		+=	-O0 -g
+STRIP		=	strip
 LDFLAGS		+=	-ldarnit
 SRCFILES	=	$(wildcard *.c)
 OBJFILES	=	$(SRCFILES:.c=.o)
@@ -13,6 +13,7 @@ OBJFILES	=	$(SRCFILES:.c=.o)
 all: $(OBJFILES) $(DEPENDS)
 	@echo " [ LD ] $(OUTBIN)"
 	@$(CC) $(CFLAGS) -o $(OUTBIN) $(OBJFILES) $(LDFLAGS)
+#	@$(STRIP) $(OUTBIN)
 	@echo "Done."
 	@echo
 	

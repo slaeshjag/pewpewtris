@@ -7,6 +7,7 @@
 #include <string.h>
 #include "block.h"
 #include "ai.h"
+#include "bullet.h"
 
 
 struct {
@@ -14,9 +15,12 @@ struct {
 	DARNIT_TILE			*tile;
 	DARNIT_BBOX			*bbox;
 	DARNIT_TILEMAP			*tm;
+	DARNIT_MAP			*play_background;
+	int				tile_lookup[180];
 	int				bs_x;
 	int				bs_y;
 	struct block_struct		falling;
+	struct bullet			bullet;
 } ppt;
 
 

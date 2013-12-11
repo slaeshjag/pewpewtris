@@ -2,7 +2,7 @@
 
 int ai_rate_spot(int index) {
 	int top[10], block[4], score[4];
-	int i, s, q, w, min, match, bonus;
+	int i, s, q, min, match, bonus;
 	
 	check_topography_falling(block);
 	check_topography_tm(top, 10, 0);
@@ -79,10 +79,8 @@ struct ai_best_pos ai_find_best_spot() {
 
 void ai_determine_best_move() {
 	struct ai_best_pos p[4];
-	struct block_struct bs;
 	int i, max_i, max;
 
-	bs = ppt.falling;
 	max = -10000;
 	i = 0;
 	for (i = 0; i < 4; i++) {
