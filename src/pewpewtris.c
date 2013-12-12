@@ -1,27 +1,6 @@
 #include "pewpewtris.h"
 #include <limits.h>
 
-void block_destroy(int index) {
-	int i, j, k;
-
-	i = ppt.tile_lookup[index];
-	if (i < 0)
-		return;
-	ppt.tm->data[i] = 0;
-	d_bbox_delete(ppt.bbox, index);
-
-	for (i = 0, j = -1; i < 4; i++)
-		if (ppt.falling.box_id[0] == index)
-			ppt.falling.box_id[i] = -1, j = i;
-	for (i = k = 0; k < j; i++)
-		if (ppt.falling.blocks[i])
-			k++;
-	i--;
-	if (i >= 0)
-		ppt.falling.blocks[i] = 0;
-	
-	ppt.tile_lookup[index] = -1;
-}
 
 
 void block_falling_reconsider() {
@@ -164,9 +143,16 @@ int main(int argc, char **argv) {
 	d_tilemap_camera_move(ppt.tm, -offset_x, -offset_y);
 	ppt.play_background = d_map_load("res/playfield_background.ldmz");
 	get_new_block();
+	bullet_init(30);
 
 	for (;;) {
 		move_block();
+		bullet_move();
+
+		if (d_keys_get().a) {
+			d_keys_set(d_keys_get());
+			bullet_fire(0, 0, 500, 0, 120);
+		}
 		
 		d_render_begin();
 		d_render_offset(-ppt.bs_x - offset_x, -ppt.bs_y - offset_y);
@@ -174,6 +160,8 @@ int main(int argc, char **argv) {
 		d_render_offset(0, 0);
 		d_tilemap_draw(ppt.tm);
 		d_tilemap_draw(ppt.play_background->layer[0].tilemap);
+		d_render_offset(-offset_x, -offset_y);
+		bullet_draw();
 		d_render_end();
 		d_loop();
 	}

@@ -34,8 +34,8 @@ void bullet_init(int max_bullets) {
 
 	for (i = 0; i < max_bullets; i++) {
 		ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
-		ppt.bullet.bullet[i].tail = d_particle_new(50, DARNIT_PARTICLE_TYPE_POINT);
-		ppt.bullet.bullet[i].impact = d_particle_new(50, DARNIT_PARTICLE_TYPE_POINT);
+		ppt.bullet.bullet[i].tail = d_particle_new(120, DARNIT_PARTICLE_TYPE_POINT);
+		ppt.bullet.bullet[i].impact = d_particle_new(120, DARNIT_PARTICLE_TYPE_POINT);
 		bullet_init_tail(ppt.bullet.bullet[i].tail);
 		bullet_init_impact(ppt.bullet.bullet[i].impact);
 	}
@@ -61,6 +61,7 @@ void bullet_draw() {
 				}
 				break;
 			default:
+				fprintf(stderr, "Drawing particle\n");
 				d_particle_draw(ppt.bullet.bullet[i].tail);
 				break;
 		}
@@ -96,6 +97,7 @@ void bullet_move() {
 				d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
 				d_render_tile_move(ppt.bullet.tile, i, ~0, ~0);
 				ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
+				block_impact(hit, 1);
 				/* TODO: Tell the block about the bad news */
 
 				continue;
@@ -106,6 +108,12 @@ void bullet_move() {
 		
 		x = (ppt.bullet.bullet[i].x / 1000);
 		y = (ppt.bullet.bullet[i].y / 1000);
+		ppt.bullet.bullet[i].age += d_last_frame_time();
+		if (ppt.bullet.bullet[i].age >= 2000) {
+			d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
+			ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
+		}
+
 		d_render_tile_move(ppt.bullet.tile, i, x - 5, y - 5);
 		d_particle_emitter_move(ppt.bullet.bullet[i].tail, x, y);
 
@@ -124,12 +132,14 @@ void bullet_fire(int type, int angle, int velocity, int x, int y) {
 			break;
 	if (ppt.bullet.bullets == i)
 		return;
+	fprintf(stderr, "Firing bullet\n");
 	ppt.bullet.bullet[i].mode = BULLET_MODE_FLYING;
 	ppt.bullet.bullet[i].angle = angle;
 	ppt.bullet.bullet[i].velocity = velocity;
 	ppt.bullet.bullet[i].x = x * 1000;
 	ppt.bullet.bullet[i].y = y * 1000;
 	ppt.bullet.bullet[i].rest_movement = 0;
+	ppt.bullet.bullet[i].age = 0;
 
 	d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_SHOWER);
 	d_particle_emitter_angle(ppt.bullet.bullet[i].impact, angle - 20 + 3600, angle + 20);

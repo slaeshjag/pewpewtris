@@ -4,6 +4,7 @@
 *.ldi
 *.so
 *.swp
+*.ldmz
 res/res
 timelapse/frames
 screenshot.png

@@ -1,6 +1,61 @@
 #define	REQUIRE_DATA
 #include "pewpewtris.h"
 
+void block_destroy(int index) {
+	int i, j, k;
+
+	i = ppt.tile_lookup[index];
+	if (i >= 0) {
+//		return;
+		ppt.tm->data[i] = 0;
+		ppt.tile_lookup[index] = -1;
+	} else {
+		for (i = 0, j = -1; i < 4; i++)
+			if (ppt.falling.box_id[0] == index)
+				ppt.falling.box_id[i] = -1, j = i;
+		for (i = k = 0; k < j; i++)
+			if (ppt.falling.blocks[i])
+				k++;
+		i--;
+		if (i >= 0)
+			ppt.falling.blocks[i] = 0;
+	}
+	
+	d_bbox_delete(ppt.bbox, index);
+	
+}
+
+
+void block_impact(int index, int damage) {
+	int i, j, k;
+
+	i = ppt.tile_lookup[index];
+
+	if (i <= 0) {
+		if (ppt.tm->data[i] <= damage)
+			block_destroy(index);
+		else
+			ppt.tm->data[i] -= damage;
+	} else {
+		for (i = 0, j = -1; i < 4; i++)
+			if (ppt.falling.box_id[0] == index)
+				ppt.falling.box_id[i] = -1, j = i;
+		for (i = k = 0; k < j; i++)
+			if (ppt.falling.blocks[i])
+				k++;
+		i--;
+		if (i >= 0) {
+			if (ppt.tm->data[i] <= damage)
+				block_destroy(index);
+			else
+				ppt.tm->data[i] -= damage;
+		}
+		
+	}
+
+	return;
+}
+
 
 struct block_struct block_rotate(struct block_struct bs) {
 	struct block_struct bs_new;

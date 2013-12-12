@@ -23,6 +23,7 @@ struct bullet_entry {
 	/* Pixel * 1000 */
 	int			x;
 	int			y;
+	int			age;
 	enum bullet_mode	mode;
 	DARNIT_PARTICLE		*tail;
 	DARNIT_PARTICLE		*impact;
@@ -35,6 +36,13 @@ struct bullet {
 	DARNIT_TILE		*tile;
 	DARNIT_TILESHEET	*ts;
 };
+
+
+void bullet_init(int max_bullets);
+void bullet_draw();
+void bullet_move();
+void bullet_fire(int type, int angle, int velocity, int x, int y);
+
 
 
 #endif
