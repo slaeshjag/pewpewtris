@@ -19,6 +19,7 @@ struct {
 	int				tile_lookup[180];
 	int				bs_x;
 	int				bs_y;
+	int				request_new;
 	struct block_struct		falling;
 	struct bullet			bullet;
 } ppt;

@@ -89,6 +89,8 @@ void move_block() {
 	int top[4], block[4], i, j, k, ind;
 	ppt.bs_y += 1;
 
+	if (ppt.request_new)
+		ppt.request_new = 0, get_new_block();
 	for (i = j = 0; i < 16; i++)
 		if (ppt.falling.blocks[i])
 			d_bbox_move(ppt.bbox, ppt.falling.box_id[j++], ppt.bs_x, ppt.bs_y);
@@ -139,6 +141,7 @@ int main(int argc, char **argv) {
 	ppt.tile = d_render_tile_new(10 * 18, ppt.block);
 	ppt.bbox = d_bbox_new(180);
 	ppt.tm = d_tilemap_new(0xFFF, ppt.block, 0xFFF, 10, 18);
+	ppt.request_new = 0;
 	offset_x = 288;
 	offset_y = 0;
 	d_tilemap_camera_move(ppt.tm, -offset_x, -offset_y);

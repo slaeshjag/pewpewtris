@@ -2,7 +2,7 @@
 #include "pewpewtris.h"
 
 void block_destroy(int index) {
-	int i, j, k;
+	int i, j, k, f;
 
 	i = ppt.tile_lookup[index];
 	if (i >= 0) {
@@ -10,12 +10,18 @@ void block_destroy(int index) {
 //		return;
 		ppt.tm->data[i] = 0;
 		ppt.tile_lookup[index] = -1;
+		d_tilemap_recalc(ppt.tm);
 	} else {
 		fprintf(stderr, "Destroying block %i\n", index);
-		for (i = 0, j = -1; i < 4; i++)
-			if (ppt.falling.box_id[i] == index)
+		for (i = f = 0, j = -1; i < 4; i++)
+			if (ppt.falling.box_id[i] == index) {
 				ppt.falling.box_id[i] = -1, j = i;
-		for (i = k = 0; k < j; i++)
+				d_render_tile_move(ppt.tile, j, ~0, ~0);
+				break;
+			} else if (ppt.falling.box_id[i] == -1)
+				f++;
+		j -= f;
+		for (i = 0, k = -1; k < j; i++)
 			if (ppt.falling.blocks[i])
 				k++;
 		i--;
@@ -23,6 +29,12 @@ void block_destroy(int index) {
 			ppt.falling.blocks[i] = 0;
 		else
 			fprintf(stderr, "Not destroying tile ID\n");
+		for (i = k = 0; i < 16; i++)
+			if (ppt.falling.blocks[i])
+				k++;
+		fprintf(stderr, "%i blocks left\n", k);
+		if (!k)
+			ppt.request_new = 1;
 	}
 	
 	d_bbox_delete(ppt.bbox, index);
@@ -38,8 +50,10 @@ void block_impact(int index, int damage) {
 	if (i >= 0) {
 		if (ppt.tm->data[i] <= damage)
 			block_destroy(index);
-		else
+		else {
+			fprintf(stderr, "Should not happen");
 			ppt.tm->data[i] -= damage;
+		}
 	} else {
 		for (i = 0, j = -1; i < 4; i++)
 			if (ppt.falling.box_id[i] == index)
@@ -51,8 +65,10 @@ void block_impact(int index, int damage) {
 		if (i >= 0) {
 			if (ppt.tm->data[i] <= damage)
 				block_destroy(index);
-			else
+			else {
 				ppt.tm->data[i] -= damage;
+				fprintf(stderr, "Should not happen\n");
+			}
 		} else
 			fprintf(stderr, "No block data found\n");
 		
