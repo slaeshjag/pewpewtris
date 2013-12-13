@@ -16,6 +16,8 @@ int ai_rate_spot(int index) {
 	index -= s;
 	if (index + q >= 10)
 		return -1123131;
+	for (i = 0; i < 4; i++)
+		score[i] = 0;;
 
 	min = 18;
 	/* Check 4 spots on the main area */

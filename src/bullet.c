@@ -61,7 +61,6 @@ void bullet_draw() {
 				}
 				break;
 			default:
-				fprintf(stderr, "Drawing particle\n");
 				d_particle_draw(ppt.bullet.bullet[i].tail);
 				break;
 		}
@@ -81,6 +80,7 @@ void bullet_move() {
 			continue;
 		ppt.bullet.bullet[i].rest_movement += d_last_frame_time() * ppt.bullet.bullet[i].velocity;
 		while (ppt.bullet.bullet[i].rest_movement >= 1000) {
+			d_particle_emitter_move(ppt.bullet.bullet[i].tail, x, y);
 			xv = d_util_sin(ppt.bullet.bullet[i].angle + 900);
 			yv = d_util_sin(ppt.bullet.bullet[i].angle);
 			xv *= 1000;
@@ -92,11 +92,14 @@ void bullet_move() {
 
 			x = (ppt.bullet.bullet[i].x / 1000) - 3;
 			y = (ppt.bullet.bullet[i].y / 1000) - 3;
-			if (d_bbox_test(ppt.bbox, x, y, 8, 8, &hit, 1)) {
+			if (d_bbox_test(ppt.bbox, x, y, 8, 8, &hit, 1) > 0) {
+				fprintf(stderr, "Collided with block %i\n", hit);
+				d_particle_emitter_move(ppt.bullet.bullet[i].impact, x, y);
 				d_particle_pulse(ppt.bullet.bullet[i].impact);
 				d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
 				d_render_tile_move(ppt.bullet.tile, i, ~0, ~0);
 				ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
+				ppt.bullet.bullet[i].rest_movement = 0;
 				block_impact(hit, 1);
 				/* TODO: Tell the block about the bad news */
 
@@ -114,8 +117,8 @@ void bullet_move() {
 			ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
 		}
 
-		d_render_tile_move(ppt.bullet.tile, i, x - 5, y - 5);
-		d_particle_emitter_move(ppt.bullet.bullet[i].tail, x, y);
+		if (ppt.bullet.bullet[i].mode == BULLET_MODE_FLYING)
+			d_render_tile_move(ppt.bullet.tile, i, x - 5, y - 5);
 
 	}
 

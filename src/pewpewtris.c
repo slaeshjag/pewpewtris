@@ -111,7 +111,8 @@ void move_block() {
 					if (ppt.falling.blocks[j]) {
 						ind = (ppt.bs_y / 24 * 10 + (j / 4 * 10) + (j & 3) + ppt.bs_x / 24);
 						ppt.tm->data[ind] = ppt.falling.blocks[j];
-						ppt.tile_lookup[ppt.falling.box_id[k]] = ind;
+						if (ppt.falling.box_id[k] >= 0)
+							ppt.tile_lookup[ppt.falling.box_id[k]] = ind;
 						k++;
 					}
 				d_tilemap_recalc(ppt.tm);
