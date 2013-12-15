@@ -13,7 +13,6 @@ void block_destroy(int index) {
 		ppt.tile_lookup[index] = -1;
 		d_tilemap_recalc(ppt.tm);
 	} else {
-		fprintf(stderr, "Destroying block %i\n", index);
 		for (i = f = 0, j = -1; i < 4; i++)
 			if (ppt.falling.box_id[i] == index) {
 				ppt.falling.box_id[i] = -1, j = i;
@@ -28,12 +27,9 @@ void block_destroy(int index) {
 		i--;
 		if (i >= 0)
 			ppt.falling.blocks[i] = 0;
-		else
-			fprintf(stderr, "Not destroying tile ID\n");
 		for (i = k = 0; i < 16; i++)
 			if (ppt.falling.blocks[i])
 				k++;
-		fprintf(stderr, "%i blocks left\n", k);
 		if (!k)
 			ppt.request_new = 1;
 	}
@@ -44,7 +40,7 @@ void block_destroy(int index) {
 
 
 void block_impact(int index, int damage) {
-	int i, j, k;
+	int i, j, k, f;
 
 	i = ppt.tile_lookup[index];
 
@@ -56,19 +52,23 @@ void block_impact(int index, int damage) {
 			ppt.tm->data[i] -= damage;
 		}
 	} else {
-		for (i = 0, j = -1; i < 4; i++)
-			if (ppt.falling.box_id[i] == index)
+		for (i = f = 0, j = -1; i < 4; i++)
+			if (ppt.falling.box_id[i] == index) {
 				j = i;
+				break;
+			} else if (ppt.falling.box_id[i] == -1)
+				f++;
+		j -= f;
 		for (i = 0, k = -1; k < j; i++)
 			if (ppt.falling.blocks[i])
 				k++;
 		i--;
 		if (i >= 0) {
-			if (ppt.tm->data[i] <= damage)
+			if (ppt.falling.blocks[i] <= damage)
 				block_destroy(index);
 			else {
 				ppt.tm->data[i] -= damage;
-				fprintf(stderr, "Should not happen\n");
+				fprintf(stderr, "Should not happen, %i %i\n", i, j);
 			}
 		} else
 			fprintf(stderr, "No block data found\n");

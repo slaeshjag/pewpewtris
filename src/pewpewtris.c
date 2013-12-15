@@ -91,9 +91,15 @@ void move_block() {
 
 	if (ppt.request_new)
 		ppt.request_new = 0, get_new_block();
-	for (i = j = 0; i < 16; i++)
+	for (i = j = 0; i < 16; i++) {
+		if (ppt.falling.box_id[j] == -1) {
+			j++, i--;
+			continue;
+		}
+
 		if (ppt.falling.blocks[i])
 			d_bbox_move(ppt.bbox, ppt.falling.box_id[j++], ppt.bs_x + (i % 4) * 24, ppt.bs_y + (i / 4 * 24));
+	}
 
 	if (ppt.bs_y % 24 == 0 || ppt.falling.first_check) {
 		check_topography_falling(block);
@@ -151,7 +157,9 @@ int main(int argc, char **argv) {
 	bullet_init(30);
 
 	for (;;) {
+		d_render_begin();
 		move_block();
+		d_render_offset(-offset_x, -offset_y);
 		bullet_move();
 
 		if (d_keys_get().a) {
@@ -159,7 +167,6 @@ int main(int argc, char **argv) {
 			bullet_fire(0, 0, 500, 0, 120);
 		}
 		
-		d_render_begin();
 		d_render_offset(-ppt.bs_x - offset_x, -ppt.bs_y - offset_y);
 		d_render_tile_draw(ppt.tile, 4);
 		d_render_offset(0, 0);

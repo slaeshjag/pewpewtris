@@ -70,7 +70,7 @@ struct ai_best_pos ai_find_best_spot() {
 		}
 	}
 	
-	fprintf(stderr, "Index %i best (%i)\n", max_i, max_score);
+	//fprintf(stderr, "Index %i best (%i)\n", max_i, max_score);
 
 	bp.pos = max_i;// - s;
 	bp.score = max_score;
@@ -96,6 +96,6 @@ void ai_determine_best_move() {
 	
 	for (i = 0; i < max_i; i++)
 		ppt.falling = block_rotate(ppt.falling);
-	fprintf(stderr, "Dropping at pos %i\n", p[max_i].pos);
+	//fprintf(stderr, "Dropping at pos %i\n", p[max_i].pos);
 	ppt.bs_x = p[max_i].pos * 24;
 }
