@@ -93,7 +93,7 @@ void move_block() {
 		ppt.request_new = 0, get_new_block();
 	for (i = j = 0; i < 16; i++)
 		if (ppt.falling.blocks[i])
-			d_bbox_move(ppt.bbox, ppt.falling.box_id[j++], ppt.bs_x, ppt.bs_y);
+			d_bbox_move(ppt.bbox, ppt.falling.box_id[j++], ppt.bs_x + (i % 4) * 24, ppt.bs_y + (i / 4 * 24));
 
 	if (ppt.bs_y % 24 == 0 || ppt.falling.first_check) {
 		check_topography_falling(block);
@@ -140,6 +140,7 @@ int main(int argc, char **argv) {
 	ppt.block = d_render_tilesheet_load("res/block.png", 24, 24, DARNIT_PFORMAT_RGB5A1);
 	ppt.tile = d_render_tile_new(10 * 18, ppt.block);
 	ppt.bbox = d_bbox_new(180);
+	d_bbox_set_indexkey(ppt.bbox);
 	ppt.tm = d_tilemap_new(0xFFF, ppt.block, 0xFFF, 10, 18);
 	ppt.request_new = 0;
 	offset_x = 288;
@@ -165,7 +166,9 @@ int main(int argc, char **argv) {
 		d_tilemap_draw(ppt.tm);
 		d_tilemap_draw(ppt.play_background->layer[0].tilemap);
 		d_render_offset(-offset_x, -offset_y);
+		d_render_blend_enable();
 		bullet_draw();
+		d_render_blend_disable();
 		d_render_end();
 		d_loop();
 	}

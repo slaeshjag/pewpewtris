@@ -1,5 +1,6 @@
 #define	_BULLET_DATA
 #include "pewpewtris.h"
+#include <limits.h>
 
 
 void bullet_init_tail(DARNIT_PARTICLE *p) {
@@ -7,6 +8,7 @@ void bullet_init_tail(DARNIT_PARTICLE *p) {
 	d_particle_emitter_velocity(p, 32, 48);
 	d_particle_emitter_gravity(p, 0, 4);
 	d_particle_life(p, 1000);
+	d_particle_point_size(p, 2);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_SHOWER);
 
 	return;
@@ -18,6 +20,7 @@ void bullet_init_impact(DARNIT_PARTICLE *p) {
 	d_particle_emitter_velocity(p, 32, 48);
 	d_particle_emitter_gravity(p, 0, 4);
 	d_particle_life(p, 1000);
+	d_particle_point_size(p, 2);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_PULSAR);
 
 	return;
@@ -33,6 +36,7 @@ void bullet_init(int max_bullets) {
 	ppt.bullet.tile = d_render_tile_new(max_bullets, ppt.bullet.ts);
 
 	for (i = 0; i < max_bullets; i++) {
+		d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
 		ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
 		ppt.bullet.bullet[i].tail = d_particle_new(120, DARNIT_PARTICLE_TYPE_POINT);
 		ppt.bullet.bullet[i].impact = d_particle_new(120, DARNIT_PARTICLE_TYPE_POINT);
@@ -90,14 +94,15 @@ void bullet_move() {
 			ppt.bullet.bullet[i].x += xv;
 			ppt.bullet.bullet[i].y += yv;
 
-			x = (ppt.bullet.bullet[i].x / 1000) - 3;
-			y = (ppt.bullet.bullet[i].y / 1000) - 3;
+			x = (ppt.bullet.bullet[i].x / 1000) + 3;
+			y = (ppt.bullet.bullet[i].y / 1000) + 3;
 			if (d_bbox_test(ppt.bbox, x, y, 8, 8, &hit, 1) > 0) {
 				fprintf(stderr, "Collided with block %i\n", hit);
 				d_particle_emitter_move(ppt.bullet.bullet[i].impact, x, y);
 				d_particle_pulse(ppt.bullet.bullet[i].impact);
 				d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
-				d_render_tile_move(ppt.bullet.tile, i, ~0, ~0);
+				d_render_tile_set(ppt.bullet.tile, i, 1);
+				d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
 				ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
 				ppt.bullet.bullet[i].rest_movement = 0;
 				block_impact(hit, 1);
@@ -136,6 +141,7 @@ void bullet_fire(int type, int angle, int velocity, int x, int y) {
 	if (ppt.bullet.bullets == i)
 		return;
 	fprintf(stderr, "Firing bullet\n");
+	d_render_tile_set(ppt.bullet.tile, i, type);
 	ppt.bullet.bullet[i].mode = BULLET_MODE_FLYING;
 	ppt.bullet.bullet[i].angle = angle;
 	ppt.bullet.bullet[i].velocity = velocity;

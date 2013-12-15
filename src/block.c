@@ -1,5 +1,6 @@
 #define	REQUIRE_DATA
 #include "pewpewtris.h"
+#include "limits.h"
 
 void block_destroy(int index) {
 	int i, j, k, f;
@@ -16,7 +17,7 @@ void block_destroy(int index) {
 		for (i = f = 0, j = -1; i < 4; i++)
 			if (ppt.falling.box_id[i] == index) {
 				ppt.falling.box_id[i] = -1, j = i;
-				d_render_tile_move(ppt.tile, j, ~0, ~0);
+				d_render_tile_move(ppt.tile, j, INT_MAX, INT_MAX);
 				break;
 			} else if (ppt.falling.box_id[i] == -1)
 				f++;
