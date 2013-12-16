@@ -8,6 +8,7 @@
 #include "block.h"
 #include "ai.h"
 #include "bullet.h"
+#include "ui.h"
 
 
 struct {
@@ -22,6 +23,7 @@ struct {
 	int				request_new;
 	struct block_struct		falling;
 	struct bullet			bullet;
+	struct ui			ui;
 } ppt;
 
 

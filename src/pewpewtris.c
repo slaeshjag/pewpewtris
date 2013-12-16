@@ -116,7 +116,13 @@ void move_block() {
 					/* Signal game over */
 				}
 
-				for (j = k = 0; j < 16; j++)
+				for (j = k = 0; j < 16; j++) {
+					if (ppt.falling.box_id[k] == -1) {
+						k++;
+						j--;
+						continue;
+					}
+
 					if (ppt.falling.blocks[j]) {
 						ind = (ppt.bs_y / 24 * 10 + (j / 4 * 10) + (j & 3) + ppt.bs_x / 24);
 						ppt.tm->data[ind] = ppt.falling.blocks[j];
@@ -124,6 +130,7 @@ void move_block() {
 							ppt.tile_lookup[ppt.falling.box_id[k]] = ind;
 						k++;
 					}
+				}
 				d_tilemap_recalc(ppt.tm);
 				get_new_block();
 				return;
@@ -136,20 +143,32 @@ void move_block() {
 }
 
 
-int main(int argc, char **argv) {
-	int offset_x, offset_y, i;
+static void init() {
+	int i;
+
 	d_init("pewpewtris", "pewpewtris", NULL);
 	d_fs_mount_self();
 	d_fs_mount("music.ldi");
 	d_fs_mount("sounds.ldi");
 
 	for (i = 0; i < 180; ppt.tile_lookup[i++] = -1);
+
 	ppt.block = d_render_tilesheet_load("res/block.png", 24, 24, DARNIT_PFORMAT_RGB5A1);
 	ppt.tile = d_render_tile_new(10 * 18, ppt.block);
 	ppt.bbox = d_bbox_new(180);
 	d_bbox_set_indexkey(ppt.bbox);
 	ppt.tm = d_tilemap_new(0xFFF, ppt.block, 0xFFF, 10, 18);
 	ppt.request_new = 0;
+
+	ui_init_playing();
+}
+
+
+int main(int argc, char **argv) {
+	int offset_x, offset_y;
+
+	init();
+
 	offset_x = 288;
 	offset_y = 0;
 	d_tilemap_camera_move(ppt.tm, -offset_x, -offset_y);
@@ -163,10 +182,7 @@ int main(int argc, char **argv) {
 		d_render_offset(-offset_x, -offset_y);
 		bullet_move();
 
-		if (d_keys_get().a) {
-			d_keys_set(d_keys_get());
-			bullet_fire(0, 0, 500, 0, 120);
-		}
+		ui_loop_playing();
 		
 		d_render_offset(-ppt.bs_x - offset_x, -ppt.bs_y - offset_y);
 		d_render_tile_draw(ppt.tile, 4);

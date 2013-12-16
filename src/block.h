@@ -1,6 +1,8 @@
 #ifndef __BLOCK_H__
 #define	__BLOCK_H__
 
+#define	BLOCK_HP_SOLID		20
+
 #ifdef REQUIRE_DATA
 
 char block_0[] = {

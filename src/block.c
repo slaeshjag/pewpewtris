@@ -40,12 +40,13 @@ void block_destroy(int index) {
 
 
 void block_impact(int index, int damage) {
-	int i, j, k, f;
+	int i, j, k, l, f;
 
 	i = ppt.tile_lookup[index];
 
 	if (i >= 0) {
-		if (ppt.tm->data[i] <= damage)
+		if (ppt.tm->data[i] == BLOCK_HP_SOLID);
+		else if (ppt.tm->data[i] <= damage)
 			block_destroy(index);
 		else {
 			ppt.tm->data[i] -= damage;
@@ -58,17 +59,19 @@ void block_impact(int index, int damage) {
 				break;
 			} else if (ppt.falling.box_id[i] == -1)
 				f++;
+		l = j;
 		j -= f;
 		for (i = 0, k = -1; k < j; i++)
 			if (ppt.falling.blocks[i])
 				k++;
 		i--;
 		if (i >= 0) {
-			if (ppt.falling.blocks[i] <= damage)
+			if (ppt.tm->data[i] == BLOCK_HP_SOLID);
+			else if (ppt.falling.blocks[i] <= damage)
 				block_destroy(index);
 			else {
 				ppt.falling.blocks[i] -= damage;
-				d_render_tile_set(ppt.tile, j, ppt.falling.blocks[i]);
+				d_render_tile_set(ppt.tile, l, ppt.falling.blocks[i]);
 			}
 		} else
 			fprintf(stderr, "No block data found\n");
