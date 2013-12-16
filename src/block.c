@@ -48,8 +48,8 @@ void block_impact(int index, int damage) {
 		if (ppt.tm->data[i] <= damage)
 			block_destroy(index);
 		else {
-			fprintf(stderr, "Should not happen");
 			ppt.tm->data[i] -= damage;
+			d_tilemap_recalc(ppt.tm);
 		}
 	} else {
 		for (i = f = 0, j = -1; i < 4; i++)
@@ -67,8 +67,8 @@ void block_impact(int index, int damage) {
 			if (ppt.falling.blocks[i] <= damage)
 				block_destroy(index);
 			else {
-				ppt.tm->data[i] -= damage;
-				fprintf(stderr, "Should not happen, %i %i\n", i, j);
+				ppt.falling.blocks[i] -= damage;
+				d_render_tile_set(ppt.tile, j, ppt.falling.blocks[i]);
 			}
 		} else
 			fprintf(stderr, "No block data found\n");

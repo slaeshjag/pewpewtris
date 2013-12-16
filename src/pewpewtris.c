@@ -38,7 +38,8 @@ void get_new_block() {
 	bs = ppt.falling;
 	for (i = j = 0; i < 16; i++) {
 		if (bs.blocks[i]) {
-			d_render_tile_set(ppt.tile, j, bs.blocks[i]);
+			ppt.falling.blocks[i] += (rand() % 3);
+			d_render_tile_set(ppt.tile, j, ppt.falling.blocks[i]);
 			d_render_tile_move(ppt.tile, j, (i % 4) * 24, (i / 4) * 24);
 			ppt.falling.box_id[j++] = d_bbox_add(ppt.bbox, (i % 4) * 24, (i / 4) * 24, 24, 24);
 		}

@@ -5,9 +5,9 @@
 
 void bullet_init_tail(DARNIT_PARTICLE *p) {
 	d_particle_color_target(p, 0, 0, 0, 0);
-	d_particle_emitter_velocity(p, 32, 48);
+	d_particle_emitter_velocity(p, 0, 256);
 	d_particle_emitter_gravity(p, 0, 4);
-	d_particle_life(p, 1000);
+	d_particle_life(p, 200);
 	d_particle_point_size(p, 2);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_SHOWER);
 
@@ -60,7 +60,7 @@ void bullet_draw() {
 				d_particle_draw(ppt.bullet.bullet[i].impact);
 				if (!d_particle_used(ppt.bullet.bullet[i].impact)) {
 					ppt.bullet.bullet[i].mode = BULLET_MODE_IDLE;
-					d_render_tile_move(ppt.bullet.tile, i, ~0, ~0);
+					d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
 					continue;
 				}
 				break;
@@ -84,7 +84,6 @@ void bullet_move() {
 			continue;
 		ppt.bullet.bullet[i].rest_movement += d_last_frame_time() * ppt.bullet.bullet[i].velocity;
 		while (ppt.bullet.bullet[i].rest_movement >= 1000) {
-			d_particle_emitter_move(ppt.bullet.bullet[i].tail, x, y);
 			xv = d_util_sin(ppt.bullet.bullet[i].angle + 900);
 			yv = d_util_sin(ppt.bullet.bullet[i].angle);
 			xv *= 1000;
@@ -94,10 +93,11 @@ void bullet_move() {
 			ppt.bullet.bullet[i].x += xv;
 			ppt.bullet.bullet[i].y += yv;
 
-			x = (ppt.bullet.bullet[i].x / 1000) - 3;
-			y = (ppt.bullet.bullet[i].y / 1000) - 3;
+			x = (ppt.bullet.bullet[i].x / 1000) - 2;
+			y = (ppt.bullet.bullet[i].y / 1000) - 2;
+			d_particle_emitter_move(ppt.bullet.bullet[i].tail, x + 2, y + 2);
 			hit = 0;
-			if (d_bbox_test(ppt.bbox, x, y, 8, 8, &hit, 1) > 0) {
+			if (d_bbox_test(ppt.bbox, x, y, 5, 5, &hit, 1) > 0) {
 				d_particle_emitter_move(ppt.bullet.bullet[i].impact, x, y);
 				d_particle_pulse(ppt.bullet.bullet[i].impact);
 				d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
@@ -153,7 +153,7 @@ void bullet_fire(int type, int angle, int velocity, int x, int y) {
 	d_particle_emitter_angle(ppt.bullet.bullet[i].impact, angle - 20 + 3600, angle + 20);
 	d_particle_emitter_move(ppt.bullet.bullet[i].tail, x, y);
 	angle += 1800;
-	d_particle_emitter_angle(ppt.bullet.bullet[i].tail, angle - 20, angle + 20);
+	d_particle_emitter_angle(ppt.bullet.bullet[i].tail, angle - 200, angle + 200);
 	r = bullet_color[(type << 2)];
 	g = bullet_color[(type << 2) + 1];
 	b = bullet_color[(type << 2) + 2];
