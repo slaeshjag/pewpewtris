@@ -67,6 +67,7 @@ struct block_struct {
 
 struct block_struct block_new();
 struct block_struct block_rotate(struct block_struct bs);
+void block_check_line();
 void block_destroy(int index);
 void block_impact(int index, int damage);
 

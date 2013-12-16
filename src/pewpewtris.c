@@ -131,6 +131,7 @@ void move_block() {
 						k++;
 					}
 				}
+				block_check_line();
 				d_tilemap_recalc(ppt.tm);
 				get_new_block();
 				return;

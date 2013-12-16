@@ -2,13 +2,31 @@
 #include "pewpewtris.h"
 #include "limits.h"
 
+
+void block_check_line() {
+	int i, j;
+
+	for (i = 0; i < 18; i++) {
+		for (j = 0; j < 10; j++)
+			if (!ppt.tm->data[i * 10 + j])
+				break;
+		if (ppt.tm->data[i * 10] == BLOCK_HP_SOLID)
+			continue;
+		if (j < 10)
+			continue;
+		for (j = 0; j < 10; j++)
+			ppt.tm->data[i * 10 + j] = BLOCK_HP_SOLID;
+	}
+
+	return;
+}
+
+
 void block_destroy(int index) {
 	int i, j, k, f;
 
 	i = ppt.tile_lookup[index];
 	if (i >= 0) {
-		fprintf(stderr, "Destroying settled block %i\n", index);
-//		return;
 		ppt.tm->data[i] = 0;
 		ppt.tile_lookup[index] = -1;
 		d_tilemap_recalc(ppt.tm);
