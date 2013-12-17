@@ -20,6 +20,8 @@ struct {
 	int				tile_lookup[180];
 	int				bs_x;
 	int				bs_y;
+	int				d_y;
+	int				current_speed;
 	int				request_new;
 	struct block_struct		falling;
 	struct bullet			bullet;

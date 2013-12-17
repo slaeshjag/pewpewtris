@@ -100,6 +100,76 @@ void block_impact(int index, int damage) {
 }
 
 
+void block_move() {
+	int top[4], block[4], i, j, k, ind;
+	ppt.bs_y += 1;
+
+	if (ppt.request_new)
+		ppt.request_new = 0, block_get_new();
+
+	if (ppt.bs_y % 24 == 0 || ppt.falling.first_check) {
+		check_topography_falling(block);
+		check_topography_tm(top, 4, ppt.bs_x / 24);
+		for (i = 0; i < 4; i++) {
+			if (ppt.bs_x / 24 + i < 0 || ppt.bs_x / 24 + i >= 10)
+				continue;
+			if (block[i] == -1)
+				continue;
+			if (ppt.bs_y / 24 + 1 + block[i] >= top[i]) {
+				if (ppt.falling.first_check) {
+					d_quit();
+					/* Signal game over */
+				}
+
+				for (j = k = 0; j < 16; j++) {
+					if (ppt.falling.box_id[k] == -1) {
+						k++;
+						j--;
+						continue;
+					}
+
+					if (ppt.falling.blocks[j]) {
+						ind = (ppt.bs_y / 24 * 10 + (j / 4 * 10) + (j & 3) + ppt.bs_x / 24);
+						ppt.tm->data[ind] = ppt.falling.blocks[j];
+						if (ppt.falling.box_id[k] >= 0)
+							ppt.tile_lookup[ppt.falling.box_id[k]] = ind;
+						k++;
+					}
+				}
+				block_check_line();
+				d_tilemap_recalc(ppt.tm);
+				block_get_new();
+				return;
+			}
+		}
+		ppt.falling.first_check = 0;
+	}
+	
+	for (i = j = 0; i < 16; i++) {
+		if (ppt.falling.box_id[j] == -1) {
+			j++, i--;
+			continue;
+		}
+
+		if (ppt.falling.blocks[i])
+			d_bbox_move(ppt.bbox, ppt.falling.box_id[j++], ppt.bs_x + (i % 4) * 24, ppt.bs_y + (i / 4 * 24));
+	}
+
+	return;
+}
+
+
+void block_move_loop() {
+	ppt.d_y += d_last_frame_time() * ppt.current_speed;
+	while (ppt.d_y >= 1000) {
+		ppt.d_y -= 1000;
+		block_move();
+	}
+
+	return;
+}
+
+
 struct block_struct block_rotate(struct block_struct bs) {
 	struct block_struct bs_new;
 	int i;
@@ -109,6 +179,29 @@ struct block_struct block_rotate(struct block_struct bs) {
 		bs_new.blocks[((i & 0x3) << 2) + (i >> 2)] = bs.blocks[i];
 	
 	return bs_new;
+}
+
+
+void block_get_new() {
+	struct block_struct bs;
+	int i, j;
+
+	bs = block_new();
+	ppt.falling = bs;
+	ppt.bs_x = ppt.bs_y = 0;
+	ai_determine_best_move();
+	bs = ppt.falling;
+	for (i = j = 0; i < 16; i++) {
+		if (bs.blocks[i]) {
+			ppt.falling.blocks[i] += (rand() % 3);
+			d_render_tile_set(ppt.tile, j, ppt.falling.blocks[i]);
+			d_render_tile_move(ppt.tile, j, (i % 4) * 24, (i / 4) * 24);
+			ppt.falling.box_id[j++] = d_bbox_add(ppt.bbox, (i % 4) * 24, (i / 4) * 24, 24, 24);
+		}
+	}
+	
+
+	return;
 }
 
 
