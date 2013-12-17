@@ -75,6 +75,19 @@ void bullet_draw() {
 }
 
 
+void bullet_eczplode(int i, int x, int y) {
+	d_particle_emitter_move(ppt.bullet.bullet[i].impact, x, y);
+	d_particle_pulse(ppt.bullet.bullet[i].impact);
+	d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
+	d_render_tile_set(ppt.bullet.tile, i, 1);
+	d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
+	ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
+	ppt.bullet.bullet[i].rest_movement = 0;
+	
+	return;
+}
+
+
 void bullet_move() {
 	int i, xv, yv, x, y;
 	unsigned int hit;
@@ -97,14 +110,11 @@ void bullet_move() {
 			y = (ppt.bullet.bullet[i].y / 1000) - 2;
 			d_particle_emitter_move(ppt.bullet.bullet[i].tail, x + 2, y + 2);
 			hit = 0;
-			if (d_bbox_test(ppt.bbox, x, y, 5, 5, &hit, 1) > 0) {
-				d_particle_emitter_move(ppt.bullet.bullet[i].impact, x, y);
-				d_particle_pulse(ppt.bullet.bullet[i].impact);
-				d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
-				d_render_tile_set(ppt.bullet.tile, i, 1);
-				d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
-				ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
-				ppt.bullet.bullet[i].rest_movement = 0;
+			if (x > 236 || y < 0 || y >= 428) {
+				bullet_eczplode(i, x, y);
+				continue;
+			} else if (d_bbox_test(ppt.bbox, x, y, 5, 5, &hit, 1) > 0) {
+				bullet_eczplode(i, x, y);
 				block_impact(hit, 1);
 				/* TODO: Tell the block about the bad news */
 
