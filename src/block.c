@@ -53,7 +53,12 @@ void block_destroy(int index) {
 	}
 	
 	d_bbox_delete(ppt.bbox, index);
-	
+
+	/* Add points */
+	ppt.ui.score_n += 500;
+	ppt.ui.redraw = 1;
+
+	return;
 }
 
 
@@ -63,7 +68,8 @@ void block_impact(int index, int damage) {
 	i = ppt.tile_lookup[index];
 
 	if (i >= 0) {
-		if (ppt.tm->data[i] == BLOCK_HP_SOLID);
+		if (ppt.tm->data[i] == BLOCK_HP_SOLID)
+			return;
 		else if (ppt.tm->data[i] <= damage)
 			block_destroy(index);
 		else {
@@ -84,7 +90,8 @@ void block_impact(int index, int damage) {
 				k++;
 		i--;
 		if (i >= 0) {
-			if (ppt.tm->data[i] == BLOCK_HP_SOLID);
+			if (ppt.tm->data[i] == BLOCK_HP_SOLID)
+				return;
 			else if (ppt.falling.blocks[i] <= damage)
 				block_destroy(index);
 			else {
@@ -95,6 +102,9 @@ void block_impact(int index, int damage) {
 			fprintf(stderr, "No block data found\n");
 		
 	}
+	
+	ppt.ui.score_n += 100;
+	ppt.ui.redraw = 1;
 
 	return;
 }

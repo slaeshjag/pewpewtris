@@ -17,6 +17,7 @@ struct {
 	DARNIT_BBOX			*bbox;
 	DARNIT_TILEMAP			*tm;
 	DARNIT_MAP			*play_background;
+	DARNIT_FONT			*font;
 	int				tile_lookup[180];
 	int				bs_x;
 	int				bs_y;

@@ -80,6 +80,8 @@ static void init() {
 	ppt.tm = d_tilemap_new(0xFFF, ppt.block, 0xFFF, 10, 18);
 	ppt.request_new = 0;
 	ppt.current_speed = 100;
+	ppt.font = d_font_load("res/font.ttf", 28, 256, 256);
+	ui_init();
 
 	ui_init_playing();
 }
@@ -113,6 +115,8 @@ int main(int argc, char **argv) {
 		d_render_offset(-offset_x, -offset_y);
 		d_render_blend_enable();
 		bullet_draw();
+		d_render_offset(0, 0);
+		ui_draw_stats();
 		d_render_blend_disable();
 		d_render_end();
 		d_loop();

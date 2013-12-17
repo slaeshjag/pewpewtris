@@ -3,8 +3,18 @@
 #define	abs(x)		((x) < 0 ? -(x) : (x))
 
 
+void ui_init() {
+	ppt.ui.score = d_text_surface_new(ppt.font, 64, 240, 560, 58);
+	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
+
+	return;
+}
+
+
 void ui_init_playing() {
 	ppt.ui.angle = 0;
+	ppt.ui.score_n = 0;
+	ppt.ui.redraw = 1;
 }
 
 
@@ -41,5 +51,29 @@ void ui_loop_playing() {
 		bullet_fire(0, ppt.ui.angle, 500, 0, 120);
 	}
 
+	return;
+}
+
+
+void ui_draw_stats() {
+	char buff[64];
+
+	if (ppt.ui.redraw) {
+		d_text_surface_reset(ppt.ui.score);
+		d_text_surface_string_append(ppt.ui.score, "Score:");
+		sprintf(buff, "%.8i", ppt.ui.score_n);
+		d_text_surface_offset_next_set(ppt.ui.score, 100);
+		d_text_surface_string_append(ppt.ui.score, buff);
+		
+		d_text_surface_reset(ppt.ui.level);
+		d_text_surface_string_append(ppt.ui.level, "Level");
+		d_text_surface_offset_next_set(ppt.ui.score, 100);
+		d_text_surface_string_append(ppt.ui.level, "INF");
+
+	}
+
+	d_text_surface_draw(ppt.ui.score);
+	d_text_surface_draw(ppt.ui.level);
+	
 	return;
 }
