@@ -6,7 +6,7 @@
 void bullet_init_tail(DARNIT_PARTICLE *p) {
 	d_particle_color_target(p, 0, 0, 0, 0);
 	d_particle_emitter_velocity(p, 0, 256);
-	d_particle_emitter_gravity(p, 0, 4);
+	d_particle_emitter_gravity(p, 0, 200);
 	d_particle_life(p, 200);
 	d_particle_point_size(p, 2);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_SHOWER);
@@ -18,7 +18,7 @@ void bullet_init_tail(DARNIT_PARTICLE *p) {
 void bullet_init_impact(DARNIT_PARTICLE *p) {
 	d_particle_color_target(p, 255, 0, 0, 0);
 	d_particle_emitter_velocity(p, 32, 48);
-	d_particle_emitter_gravity(p, 0, 4);
+	d_particle_emitter_gravity(p, 0, 200);
 	d_particle_life(p, 1000);
 	d_particle_point_size(p, 2);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_PULSAR);

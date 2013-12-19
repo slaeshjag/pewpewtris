@@ -3,8 +3,8 @@
 
 #include <darnit/darnit.h>
 
-#define	UI_MIN_ANGLE		-800
-#define	UI_MAX_ANGLE		800
+#define	UI_MIN_ANGLE		-850
+#define	UI_MAX_ANGLE		850
 
 
 struct ui {
