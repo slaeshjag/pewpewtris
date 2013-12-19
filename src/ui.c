@@ -48,7 +48,7 @@ void ui_loop_playing() {
 		k = d_keys_zero();
 		k.a = 1;
 		d_keys_set(k);
-		bullet_fire(0, ppt.ui.angle, 500, 0, 120);
+		bullet_fire(0, ppt.ui.angle, 500, 0, 216);
 	}
 
 	return;
