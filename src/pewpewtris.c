@@ -82,6 +82,7 @@ static void init() {
 	ppt.font = d_font_load("res/font.ttf", 28, 256, 256);
 	ui_init();
 	bullet_init(30);
+	highscore_init();
 
 	ui_init_playing();
 }

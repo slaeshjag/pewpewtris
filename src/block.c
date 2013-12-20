@@ -256,6 +256,9 @@ struct block_struct block_new() {
 		case 6:
 			src = block_6;
 			break;
+		default:
+			src = block_0;
+			break;
 	}
 
 	memcpy(bs.blocks, src, 16);

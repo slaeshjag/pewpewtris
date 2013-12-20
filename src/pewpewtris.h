@@ -10,6 +10,7 @@
 #include "bullet.h"
 #include "ui.h"
 #include "level.h"
+#include "highscore.h"
 
 
 struct {
@@ -28,6 +29,7 @@ struct {
 	struct bullet			bullet;
 	struct ui			ui;
 	struct level			level;
+	struct highscore_file		highscore;
 } ppt;
 
 

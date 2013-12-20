@@ -60,6 +60,7 @@ struct ai_best_pos ai_find_best_spot() {
 		if (block[i] >= 0)
 			break;
 	s = i;
+	max_i = 9;
 
 	max_score = -4000;
 	for (i = 0; i < 10; i++) {

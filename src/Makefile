@@ -25,6 +25,6 @@ clean:
 	@echo 
 
 %.o: %.c %.h
-	@echo " [ CC ] darnit/$<"
+	@echo " [ CC ] src/$<"
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	
