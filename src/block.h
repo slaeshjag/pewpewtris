@@ -2,6 +2,7 @@
 #define	__BLOCK_H__
 
 #define	BLOCK_HP_SOLID		20
+#define	BLOCK_TYPES		4
 
 #ifdef REQUIRE_DATA
 

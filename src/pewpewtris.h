@@ -9,6 +9,7 @@
 #include "ai.h"
 #include "bullet.h"
 #include "ui.h"
+#include "level.h"
 
 
 struct {
@@ -22,11 +23,11 @@ struct {
 	int				bs_x;
 	int				bs_y;
 	int				d_y;
-	int				current_speed;
 	int				request_new;
 	struct block_struct		falling;
 	struct bullet			bullet;
 	struct ui			ui;
+	struct level			level;
 } ppt;
 
 

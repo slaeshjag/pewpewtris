@@ -3,6 +3,17 @@
 #include "limits.h"
 
 
+int block_get_type() {
+	unsigned int i, b;
+
+	b = rand() % ppt.level.block_likely[BLOCK_TYPES - 1];
+	for (i = 0; i < BLOCK_TYPES; i++)
+		if (b < ppt.level.block_likely[i])
+			return i + 1;
+	return BLOCK_HP_SOLID;
+}
+
+
 void block_check_line() {
 	int i, j;
 
@@ -55,8 +66,10 @@ void block_destroy(int index) {
 	d_bbox_delete(ppt.bbox, index);
 
 	/* Add points */
+	ppt.level.blocks++;
 	ppt.ui.score_n += 500;
 	ppt.ui.redraw = 1;
+	level_update();
 
 	return;
 }
@@ -170,7 +183,7 @@ void block_move() {
 
 
 void block_move_loop() {
-	ppt.d_y += d_last_frame_time() * ppt.current_speed;
+	ppt.d_y += d_last_frame_time() * ppt.level.block_dy;
 	while (ppt.d_y >= 1000) {
 		ppt.d_y -= 1000;
 		block_move();
@@ -203,7 +216,7 @@ void block_get_new() {
 	bs = ppt.falling;
 	for (i = j = 0; i < 16; i++) {
 		if (bs.blocks[i]) {
-			ppt.falling.blocks[i] += (rand() % 3);
+			ppt.falling.blocks[i] = block_get_type();
 			d_render_tile_set(ppt.tile, j, ppt.falling.blocks[i]);
 			d_render_tile_move(ppt.tile, j, (i % 4) * 24, (i / 4) * 24);
 			ppt.falling.box_id[j++] = d_bbox_add(ppt.bbox, (i % 4) * 24, (i / 4) * 24, 24, 24);

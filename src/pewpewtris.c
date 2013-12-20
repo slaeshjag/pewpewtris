@@ -79,9 +79,9 @@ static void init() {
 	d_bbox_set_indexkey(ppt.bbox);
 	ppt.tm = d_tilemap_new(0xFFF, ppt.block, 0xFFF, 10, 18);
 	ppt.request_new = 0;
-	ppt.current_speed = 100;
 	ppt.font = d_font_load("res/font.ttf", 28, 256, 256);
 	ui_init();
+	bullet_init(30);
 
 	ui_init_playing();
 }
@@ -96,8 +96,7 @@ int main(int argc, char **argv) {
 	offset_y = 0;
 	d_tilemap_camera_move(ppt.tm, -offset_x, -offset_y);
 	ppt.play_background = d_map_load("res/playfield_background.ldmz");
-	block_get_new();
-	bullet_init(30);
+	level_init();
 
 	for (;;) {
 		d_render_begin();

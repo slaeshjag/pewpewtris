@@ -68,7 +68,8 @@ void ui_draw_stats() {
 		d_text_surface_reset(ppt.ui.level);
 		d_text_surface_string_append(ppt.ui.level, "Level");
 		d_text_surface_offset_next_set(ppt.ui.level, 100);
-		d_text_surface_string_append(ppt.ui.level, "INF");
+		sprintf(buff, "%i", ppt.level.level);
+		d_text_surface_string_append(ppt.ui.level, buff);
 
 	}
 
