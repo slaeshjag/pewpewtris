@@ -18,6 +18,9 @@ void state_loop() {
 			}
 	
 			switch (ppt.state.new) {
+				case STATE_NUM_MAIN_MENU:
+					ui_init_mainmenu();
+					break;
 				case STATE_NUM_IN_GAME:
 					ui_init_playing();
 					level_init();
@@ -44,9 +47,10 @@ void state_loop() {
 
 	switch (ppt.state.old) {
 		case STATE_NUM_MAIN_MENU:
-			ui_loop_menu();
-
 			d_tilemap_draw(ppt.ui.menu_background->layer[0].tilemap);
+			d_render_blend_enable();
+			ui_loop_menu();
+			d_render_blend_disable();
 			break;
 		case STATE_NUM_IN_GAME:
 			block_move_loop();

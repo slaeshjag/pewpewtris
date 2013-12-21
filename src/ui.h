@@ -18,6 +18,8 @@ struct ui {
 	DARNIT_TEXT_SURFACE	*level;
 	DARNIT_TEXT_SURFACE	*highscore;
 
+	DARNIT_MENU		*main_menu;
+
 	DARNIT_MAP		*play_background;
 	DARNIT_MAP		*menu_background;
 	DARNIT_MAP		*highscore_background;
@@ -27,6 +29,7 @@ struct ui {
 void ui_init();
 void ui_init_playing();
 void ui_init_highscore();
+void ui_init_mainmenu();
 void ui_loop_menu();
 void ui_loop_playing();
 void ui_loop_highscore();

@@ -7,6 +7,8 @@ void ui_init() {
 	ppt.ui.score = d_text_surface_new(ppt.font, 64, 240, 560, 58);
 	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
 	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 110, 120);
+	ppt.ui.main_menu = d_menu_vertical_new("New  Game\nHighscore\n Options\n Credits\nQuit Game", 314, 120, ppt.font, 164, 23, 800);
+	d_menu_shade_color(ppt.ui.main_menu, 0, 0, 0, 255);
 
 	return;
 }
@@ -44,6 +46,13 @@ void ui_init_highscore() {
 		sprintf(buff, "%.2i\n", ppt.highscore.highscore[i].level);
 		d_text_surface_string_append(ppt.ui.highscore, buff);
 	}
+
+	return;
+}
+
+
+void ui_init_mainmenu() {
+	d_menu_selection_wait(ppt.ui.main_menu);
 
 	return;
 }
@@ -87,9 +96,31 @@ void ui_loop_playing() {
 
 
 void ui_loop_menu() {
-	if (d_keys_get().start)
-		ppt.state.new = STATE_NUM_IN_GAME;
-	
+//	if (d_keys_get().start)
+//		ppt.state.new = STATE_NUM_IN_GAME;
+	switch (d_menu_loop(ppt.ui.main_menu)) {
+		case 0: /* New game */
+			ppt.state.new = STATE_NUM_IN_GAME;
+			break;
+		case 1:
+			ppt.state.new = STATE_NUM_HIGHSCORE;
+			break;
+		case 2:	/* Options */
+		case 3:	/* Credits */
+			d_menu_selection_wait(ppt.ui.main_menu);
+			break;
+		case 4:	/* Quit game */
+		case -2:
+			d_quit();
+			break;
+		case -1:
+		default:
+			return;
+	}
+
+
+	/* TODO: Play sound on menu selection change */
+
 	return;
 }
 
