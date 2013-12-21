@@ -75,6 +75,23 @@ void bullet_draw() {
 }
 
 
+void bullet_kill_all() {
+	int i;
+
+	for (i = 0; i < ppt.bullet.bullets; i++) {
+		d_particle_clear_all(ppt.bullet.bullet[i].impact);
+		d_particle_clear_all(ppt.bullet.bullet[i].tail);
+		d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_OFF);
+		ppt.bullet.bullet[i].mode = BULLET_MODE_IDLE;
+		ppt.bullet.bullet[i].rest_movement = 0;
+		d_render_tile_set(ppt.bullet.tile, i, 1);
+		d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
+	}
+
+	return;
+}
+
+
 void bullet_eczplode(int i, int x, int y) {
 	d_particle_emitter_move(ppt.bullet.bullet[i].impact, x, y);
 	d_particle_pulse(ppt.bullet.bullet[i].impact);

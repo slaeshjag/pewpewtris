@@ -1,7 +1,7 @@
 #ifndef __HIGHSCORE_H__
 #define	__HIGHSCORE_H__
 
-#define	HIGHSCORE_NUMBER	7
+#define	HIGHSCORE_NUMBER	10
 #define	HIGHSCORE_FILE		"pewpewtris.highscore"
 
 struct highscore_entry {
@@ -18,6 +18,7 @@ struct highscore_file {
 void highscore_init();
 void highscore_save();
 void highscore_add(char name[32]);
+int highscore_is_new();
 
 
 #endif

@@ -11,6 +11,7 @@
 #include "ui.h"
 #include "level.h"
 #include "highscore.h"
+#include "state.h"
 
 
 struct {
@@ -18,7 +19,6 @@ struct {
 	DARNIT_TILE			*tile;
 	DARNIT_BBOX			*bbox;
 	DARNIT_TILEMAP			*tm;
-	DARNIT_MAP			*play_background;
 	DARNIT_FONT			*font;
 	int				tile_lookup[180];
 	int				bs_x;
@@ -30,6 +30,7 @@ struct {
 	struct ui			ui;
 	struct level			level;
 	struct highscore_file		highscore;
+	struct state			state;
 } ppt;
 
 

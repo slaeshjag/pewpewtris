@@ -17,7 +17,6 @@ static const int block_multiply[BLOCK_TYPES] = {
 void level_init() {
 	ppt.level.blocks = 0;
 	level_update();
-	block_get_new();
 	
 	return;
 }

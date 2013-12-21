@@ -140,7 +140,9 @@ void block_move() {
 				continue;
 			if (ppt.bs_y / 24 + 1 + block[i] >= top[i]) {
 				if (ppt.falling.first_check) {
-					d_quit();
+					ppt.state.new = STATE_NUM_NEW_HIGHSCORE;
+					ppt.ui.game_over = 1;
+					return;
 					/* Signal game over */
 				}
 
@@ -184,7 +186,7 @@ void block_move() {
 
 void block_move_loop() {
 	ppt.d_y += d_last_frame_time() * ppt.level.block_dy;
-	while (ppt.d_y >= 1000) {
+	while (ppt.d_y >= 1000 && !ppt.ui.game_over) {
 		ppt.d_y -= 1000;
 		block_move();
 	}

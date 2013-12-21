@@ -6,6 +6,7 @@
 void ui_init() {
 	ppt.ui.score = d_text_surface_new(ppt.font, 64, 240, 560, 58);
 	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
+	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 100, 60);
 
 	return;
 }
@@ -15,6 +16,36 @@ void ui_init_playing() {
 	ppt.ui.angle = 0;
 	ppt.ui.score_n = 0;
 	ppt.ui.redraw = 1;
+	ppt.ui.game_over = 0;
+	ppt.request_new = 1;
+
+	memset(ppt.tm->data, 0, sizeof(int) * ppt.tm->w * ppt.tm->h);
+	memset(ppt.tile_lookup, 0xFF, sizeof(int) * ppt.tm->w * ppt.tm->h);
+	bullet_kill_all();
+	/* TODO: kill all bullets */
+	d_tilemap_recalc(ppt.tm);
+	d_bbox_clear(ppt.bbox);
+}
+
+
+void ui_init_highscore() {
+	int i;
+	char buff[10];
+	d_text_surface_reset(ppt.ui.highscore);
+
+	for (i = 0; i < HIGHSCORE_NUMBER; i++) {
+		if (!ppt.highscore.highscore[i].score)
+			break;
+		d_text_surface_string_append(ppt.ui.highscore, ppt.highscore.highscore[i].name);
+		d_text_surface_offset_next_set(ppt.ui.highscore, 400);
+		sprintf(buff, "%.8i", ppt.highscore.highscore[i].score);
+		d_text_surface_string_append(ppt.ui.highscore, buff);
+		d_text_surface_offset_next_set(ppt.ui.highscore, 550);
+		sprintf(buff, "%.2i\n", ppt.highscore.highscore[i].level);
+		d_text_surface_string_append(ppt.ui.highscore, buff);
+	}
+
+	return;
 }
 
 
@@ -50,6 +81,21 @@ void ui_loop_playing() {
 		d_keys_set(k);
 		bullet_fire(0, ppt.ui.angle, 500, 0, 216);
 	}
+
+	return;
+}
+
+
+void ui_loop_menu() {
+	if (d_keys_get().start)
+		ppt.state.new = STATE_NUM_IN_GAME;
+	
+	return;
+}
+
+
+void ui_loop_highscore() {
+	d_text_surface_draw(ppt.ui.highscore);
 
 	return;
 }

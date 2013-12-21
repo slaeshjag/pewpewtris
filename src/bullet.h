@@ -42,6 +42,7 @@ void bullet_init(int max_bullets);
 void bullet_draw();
 void bullet_move();
 void bullet_fire(int type, int angle, int velocity, int x, int y);
+void bullet_kill_all();
 
 
 

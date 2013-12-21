@@ -16,7 +16,7 @@ void highscore_swap_endian() {
 
 void highscore_init() {
 	DARNIT_FILE *f;
-	
+
 	memset(&ppt.highscore, 0, sizeof(ppt.highscore));
 
 	if (!(f = d_file_open(HIGHSCORE_FILE, "rb")))
@@ -56,4 +56,14 @@ void highscore_add(char name[32]) {
 			break;
 		}
 	return;
+}
+
+
+int highscore_is_new() {
+	int i;
+
+	for (i = 0; i < HIGHSCORE_NUMBER; i++)
+		if (ppt.highscore.highscore[i].score < ppt.ui.score_n)
+			return 1;
+	return 0;
 }
