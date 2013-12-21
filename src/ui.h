@@ -20,6 +20,7 @@ struct ui {
 
 	DARNIT_MAP		*play_background;
 	DARNIT_MAP		*menu_background;
+	DARNIT_MAP		*highscore_background;
 };
 
 

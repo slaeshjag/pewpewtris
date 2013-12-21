@@ -6,7 +6,7 @@
 void ui_init() {
 	ppt.ui.score = d_text_surface_new(ppt.font, 64, 240, 560, 58);
 	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
-	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 100, 60);
+	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 110, 120);
 
 	return;
 }

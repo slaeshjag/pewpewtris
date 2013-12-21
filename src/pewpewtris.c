@@ -90,6 +90,7 @@ static void init() {
 	
 	ppt.ui.play_background = d_map_load("res/playfield_background.ldmz");
 	ppt.ui.menu_background = d_map_load("res/mainmenu_background.ldmz");
+	ppt.ui.highscore_background = d_map_load("res/highscore_background.ldmz");
 }
 
 

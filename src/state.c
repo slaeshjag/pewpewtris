@@ -69,6 +69,7 @@ void state_loop() {
 
 			break;
 		case STATE_NUM_HIGHSCORE:
+			d_tilemap_draw(ppt.ui.highscore_background->layer[0].tilemap);
 			d_render_blend_enable();
 			ui_loop_highscore();
 			d_render_blend_disable();

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="34" height="20" tilewidth="24" tileheight="24">
+ <properties>
+  <property name="tileset" value="res/playfield_background.png"/>
+ </properties>
+ <tileset firstgid="1" name="playfield_background" tilewidth="24" tileheight="24">
+  <image source="playfield_background.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="34" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzjZGBg4BzFo5hIzAzELDTGrES4g4MOfuUadceoO0bdMeqOUXeMumOA3MELxHw0xvx08Cu5GAB1aRfp
+  </data>
+ </layer>
+</map>
