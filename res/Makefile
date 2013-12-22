@@ -8,6 +8,8 @@ default:
 	@darnit-tmxconv highscore_background.tmx res/highscore_background.ldmz 2>/dev/null
 	@cp -f block.png res/
 	@cp -f bullet.png res/
+	@cp -f turret.png res/
+	@cp -f turret.spr res/
 	@cp -f playfield_background.png res/
 	@cp -f font.ttf res/
 	@echo " [ LDI] res/"

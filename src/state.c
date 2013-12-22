@@ -68,6 +68,7 @@ void state_loop() {
 			d_render_blend_enable();
 			bullet_draw();
 			d_render_offset(0, 0);
+			ui_draw_player();
 			ui_draw_stats();
 			d_render_blend_disable();
 

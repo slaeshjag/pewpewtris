@@ -6,6 +6,9 @@
 #define	UI_MIN_ANGLE		-850
 #define	UI_MAX_ANGLE		850
 
+#define	TURRET_DEFAULT_X	264
+#define	TURRET_DEFAULT_Y	204
+
 
 struct ui {
 	int			angle;
@@ -14,6 +17,9 @@ struct ui {
 	int			offset_x;
 	int			offset_y;
 	int			game_over;
+
+	int			turret_x;
+	int			turret_y;
 	DARNIT_TEXT_SURFACE	*score;
 	DARNIT_TEXT_SURFACE	*level;
 	DARNIT_TEXT_SURFACE	*highscore;
@@ -23,6 +29,8 @@ struct ui {
 	DARNIT_MAP		*play_background;
 	DARNIT_MAP		*menu_background;
 	DARNIT_MAP		*highscore_background;
+
+	DARNIT_SPRITE		*player;
 };
 
 
@@ -34,5 +42,6 @@ void ui_loop_menu();
 void ui_loop_playing();
 void ui_loop_highscore();
 void ui_draw_stats();
+void ui_draw_player();
 
 #endif

@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="34" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYCIBEwtIMZMcPBTdwQzELAQwKx3cwQvEfAQwPx3cMRovqO4YjZdRd4y6Y9Qdo+4YdccohmAAs1QFAQ==
+   eJxjYmBgYCISszMQD4g1kxw8VN3BDMQsBDArHdzBC8R8BDA/HdwxGi+o7hiNl1F3jLpj1B2j7hh1xyiGYADJ0gVb
   </data>
  </layer>
 </map>

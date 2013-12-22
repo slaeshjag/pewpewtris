@@ -10,12 +10,16 @@ void ui_init() {
 	ppt.ui.main_menu = d_menu_vertical_new("New  Game\nHighscore\n Options\n Credits\nQuit Game", 314, 120, ppt.font, 164, 23, 800);
 	d_menu_shade_color(ppt.ui.main_menu, 0, 0, 0, 255);
 
+	ppt.ui.player = d_sprite_load("res/turret.spr", 0, DARNIT_PFORMAT_RGB5A1);
+
 	return;
 }
 
 
 void ui_init_playing() {
 	ppt.ui.angle = 0;
+	ppt.ui.turret_x = TURRET_DEFAULT_X;
+	ppt.ui.turret_y = TURRET_DEFAULT_Y;
 	ppt.ui.score_n = 0;
 	ppt.ui.redraw = 1;
 	ppt.ui.game_over = 0;
@@ -27,6 +31,9 @@ void ui_init_playing() {
 	/* TODO: kill all bullets */
 	d_tilemap_recalc(ppt.tm);
 	d_bbox_clear(ppt.bbox);
+
+	d_sprite_rotate(ppt.ui.player, 0);
+	d_sprite_move(ppt.ui.player, ppt.ui.turret_x, ppt.ui.turret_y);
 }
 
 
@@ -58,17 +65,24 @@ void ui_init_mainmenu() {
 }
 
 
+void ui_draw_player() {
+	d_sprite_draw(ppt.ui.player);
+}
+
+
 void ui_loop_playing() {
-	int js0_x, js0_y;
+	int js0_x, js0_y, angle, js1_y, y;
 	float a, b, t;
 	DARNIT_KEYS k;
 
-	d_joystick_get(&js0_x, &js0_y, NULL, NULL);
+	angle = ppt.ui.angle;
+	y = ppt.ui.turret_y;
+	d_joystick_get(&js0_x, &js0_y, NULL, &js1_y);
 	if (!js0_x && !js0_y) {
-		if (d_keys_get().up) {
-			ppt.ui.angle -= (d_last_frame_time() / 3);
-		} else if (d_keys_get().down) {
-			ppt.ui.angle += (d_last_frame_time() / 3);
+		if (d_keys_get().left) {
+			ppt.ui.angle -= (d_last_frame_time());
+		} else if (d_keys_get().right) {
+			ppt.ui.angle += (d_last_frame_time());
 		}
 	} else {
 		a = abs(js0_x);
@@ -79,16 +93,36 @@ void ui_loop_playing() {
 		ppt.ui.angle = t;
 	}
 
+	if (!js1_y) {
+		if (d_keys_get().up || d_keys_get().l)
+			ppt.ui.turret_y -= d_last_frame_time() / 2;
+		if (d_keys_get().down || d_keys_get().r)
+			ppt.ui.turret_y += d_last_frame_time() / 2;
+	} else {
+		js1_y *= 200;		/* 150 pix/sec max speed */
+		js1_y /= 32768;
+		ppt.ui.turret_y += js1_y;
+	}
+
 	if (ppt.ui.angle <= UI_MIN_ANGLE)
 		ppt.ui.angle = UI_MIN_ANGLE;
 	else if (ppt.ui.angle >= UI_MAX_ANGLE)
 		ppt.ui.angle = UI_MAX_ANGLE;
+	if (ppt.ui.turret_y < 0)
+		ppt.ui.turret_y = 0;
+	else if (ppt.ui.turret_y > 412)
+		ppt.ui.turret_y = 408;
+	
+	if (ppt.ui.turret_y != y)
+		d_sprite_move(ppt.ui.player, ppt.ui.turret_x, ppt.ui.turret_y);
+	if (ppt.ui.angle != angle)
+		d_sprite_rotate(ppt.ui.player, -ppt.ui.angle);
 	
 	if (d_keys_get().a) {
 		k = d_keys_zero();
 		k.a = 1;
 		d_keys_set(k);
-		bullet_fire(0, ppt.ui.angle, 500, 0, 216);
+		bullet_fire(0, ppt.ui.angle, 500, -12, ppt.ui.turret_y + 12);
 	}
 
 	return;
