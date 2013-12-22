@@ -8,6 +8,8 @@ void ui_init() {
 	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
 	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 110, 120);
 	ppt.ui.main_menu = d_menu_vertical_new("New  Game\nHighscore\n Options\n Credits\nQuit Game", 314, 120, ppt.font, 164, 23, 800);
+	ppt.ui.highscore_str[0] = 0;
+	ppt.ui.highscore_name = d_menu_textinput_new(216, 320, ppt.font, ppt.ui.highscore_str, 32, 360);
 	d_menu_shade_color(ppt.ui.main_menu, 0, 0, 0, 255);
 
 	ppt.ui.player = d_sprite_load("res/turret.spr", 0, DARNIT_PFORMAT_RGB5A1);
@@ -75,6 +77,8 @@ void ui_loop_playing() {
 	float a, b, t;
 	DARNIT_KEYS k;
 
+	if (ppt.ui.game_over)
+		return;
 	angle = ppt.ui.angle;
 	y = ppt.ui.turret_y;
 	d_joystick_get(&js0_x, &js0_y, NULL, &js1_y);
@@ -177,7 +181,7 @@ void ui_draw_stats() {
 		d_text_surface_string_append(ppt.ui.score, buff);
 		
 		d_text_surface_reset(ppt.ui.level);
-		d_text_surface_string_append(ppt.ui.level, "Level");
+		d_text_surface_string_append(ppt.ui.level, "Level:");
 		d_text_surface_offset_next_set(ppt.ui.level, 100);
 		sprintf(buff, "%i", ppt.level.level);
 		d_text_surface_string_append(ppt.ui.level, buff);

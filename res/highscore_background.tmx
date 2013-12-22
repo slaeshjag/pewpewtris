@@ -4,11 +4,11 @@
   <property name="tileset" value="res/playfield_background.png"/>
  </properties>
  <tileset firstgid="1" name="playfield_background" tilewidth="24" tileheight="24">
-  <image source="playfield_background.png" width="128" height="128"/>
+  <image source="playfield_background.png" width="256" height="256"/>
  </tileset>
  <layer name="Tile Layer 1" width="34" height="20">
   <data encoding="base64" compression="zlib">
-   eJzjZGBg4BzFo5hIzAzELDTGrES4g4MOfuUadceoO0bdMeqOUXeMumOA3MELxHw0xvx08Cu5GAB1aRfp
+   eJzjY2Bg4BvFo5hIzAzELDTGrES4g5cOfuUfdceoO0bdMeqOUXeMumOA3CEOxBI0xpJ08Cu5GABbhiUx
   </data>
  </layer>
 </map>

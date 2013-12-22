@@ -140,8 +140,9 @@ void block_move() {
 				continue;
 			if (ppt.bs_y / 24 + 1 + block[i] >= top[i]) {
 				if (ppt.falling.first_check) {
-					ppt.state.new = STATE_NUM_NEW_HIGHSCORE;
-					ppt.ui.game_over = 1;
+					//ppt.state.new = STATE_NUM_NEW_HIGHSCORE;
+					ppt.ui.wait_for_name = (highscore_is_new() ? 1 : 0);;
+					ppt.ui.game_over = d_time_get();
 					return;
 					/* Signal game over */
 				}

@@ -9,6 +9,8 @@
 #define	TURRET_DEFAULT_X	264
 #define	TURRET_DEFAULT_Y	204
 
+#define	UI_GAME_OVER_DELAY	2000
+
 
 struct ui {
 	int			angle;
@@ -16,7 +18,8 @@ struct ui {
 	int			redraw;
 	int			offset_x;
 	int			offset_y;
-	int			game_over;
+	unsigned int		game_over;
+	int			wait_for_name;
 
 	int			turret_x;
 	int			turret_y;
@@ -25,6 +28,8 @@ struct ui {
 	DARNIT_TEXT_SURFACE	*highscore;
 
 	DARNIT_MENU		*main_menu;
+	DARNIT_MENU		*highscore_name;
+	char			highscore_str[32];
 
 	DARNIT_MAP		*play_background;
 	DARNIT_MAP		*menu_background;

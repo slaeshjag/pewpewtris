@@ -4,11 +4,21 @@
   <property name="tileset" value="res/playfield_background.png"/>
  </properties>
  <tileset firstgid="1" name="background" tilewidth="24" tileheight="24">
-  <image source="playfield_background.png" width="128" height="128"/>
+  <image source="playfield_background.png" width="256" height="256"/>
  </tileset>
  <layer name="Tile Layer 1" width="34" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYCISszMQD4g1kxw8VN3BDMQsBDArHdzBC8R8BDA/HdwxGi+o7hiNl1F3jLpj1B2j7hh1xyiGYADJ0gVb
+   eJxjYmBgYCIS8zAQD4g1kxw8VN3BDMQsBDArHdwhDsQSBLAkHdwxGi+o7hiNl1F3jLpj1B2j7hh1xyiGYAD5mgZ9
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="34" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt0csNgCAABFG6U0QRUfxd7L8LpgUPEEh2knffZI3pr++H0jsGjLCY4DBjgceKUGHHhogdBxJOXLjx4K2wo4VflFJKKdV3GXAfDzM=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="34" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt0bcNgFAQBFEiXIQrgQ7w3tN/SUwRF3yhHenlK63nKaXUvysNWO3wESBEhBgVajRo0aHHgBETZuMdCVJkyFFgwYoNOw6cuHDjwWu8w5VftEMpt/oAzScPXQ==
   </data>
  </layer>
 </map>

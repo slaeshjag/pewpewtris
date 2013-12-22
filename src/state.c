@@ -31,7 +31,7 @@ void state_loop() {
 					else {
 						/* Just temporary */
 						ppt.state.new = STATE_NUM_HIGHSCORE;
-						highscore_add("Arne");
+						highscore_add(ppt.ui.highscore_str);
 					}
 				case STATE_NUM_HIGHSCORE:
 					ui_init_highscore();
@@ -70,8 +70,25 @@ void state_loop() {
 			d_render_offset(0, 0);
 			ui_draw_player();
 			ui_draw_stats();
+			if (ppt.ui.game_over) {
+				d_tilemap_draw(ppt.ui.play_background->layer[1].tilemap);
+				if (ppt.ui.wait_for_name) {
+					d_tilemap_draw(ppt.ui.play_background->layer[2].tilemap);
+					switch(d_menu_loop(ppt.ui.highscore_name)) {
+						case -2:
+							d_menu_selection_wait(ppt.ui.highscore_name);
+							break;
+						case -1:
+							break;
+						default:
+							ppt.state.new = STATE_NUM_NEW_HIGHSCORE;
+							break;
+					}
+				} else if (d_time_get() - ppt.ui.game_over >= UI_GAME_OVER_DELAY)
+					ppt.state.new = STATE_NUM_HIGHSCORE;
+			}
+			
 			d_render_blend_disable();
-
 			break;
 		case STATE_NUM_HIGHSCORE:
 			d_tilemap_draw(ppt.ui.highscore_background->layer[0].tilemap);
