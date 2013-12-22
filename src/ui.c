@@ -99,7 +99,7 @@ void ui_loop_playing() {
 		if (d_keys_get().down || d_keys_get().r)
 			ppt.ui.turret_y += d_last_frame_time() / 2;
 	} else {
-		js1_y *= 200;		/* 150 pix/sec max speed */
+		js1_y *= 150;		/* 150 pix/sec max speed */
 		js1_y /= 32768;
 		ppt.ui.turret_y += js1_y;
 	}
