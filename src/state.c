@@ -22,6 +22,8 @@ void state_loop() {
 					ui_init_mainmenu();
 					break;
 				case STATE_NUM_IN_GAME:
+					d_loop();
+					d_loop();
 					ui_init_playing();
 					level_init();
 					break;
@@ -96,7 +98,7 @@ void state_loop() {
 			ui_loop_highscore();
 			d_render_blend_disable();
 
-			if (d_keys_get().start) {
+			if (d_keys_get().BUTTON_ACCEPT) {
 				d_keys_set(d_keys_get());
 				ppt.state.new = STATE_NUM_MAIN_MENU;
 			}

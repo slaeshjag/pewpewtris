@@ -217,15 +217,21 @@ void block_get_new() {
 	ppt.bs_x = ppt.bs_y = 0;
 	ai_determine_best_move();
 	bs = ppt.falling;
+
+	j = 16;
+
 	for (i = j = 0; i < 16; i++) {
 		if (bs.blocks[i]) {
+			if (i < j)
+				j = i;
 			ppt.falling.blocks[i] = block_get_type();
 			d_render_tile_set(ppt.tile, j, ppt.falling.blocks[i]);
 			d_render_tile_move(ppt.tile, j, (i % 4) * 24, (i / 4) * 24);
 			ppt.falling.box_id[j++] = d_bbox_add(ppt.bbox, (i % 4) * 24, (i / 4) * 24, 24, 24);
 		}
 	}
-	
+
+	ppt.bs_y = -(j / 4) * 24;
 
 	return;
 }

@@ -18,3 +18,5 @@ default:
 	@rm res.ldi
 
 clean:
+	@echo " [ RM ] res/res"
+	@rm -rf res/
