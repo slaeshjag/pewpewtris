@@ -17,6 +17,7 @@ static const int block_multiply[BLOCK_TYPES] = {
 void level_init() {
 	ppt.level.blocks = 0;
 	ppt.level.level = 1;
+	ppt.d_y = 0;
 	level_update();
 	
 	return;
@@ -28,7 +29,7 @@ void level_update() {
 
 	l = ppt.level.blocks / (ppt.level.level + 10) + 1;
 	if (l > ppt.level.level) ppt.level.level = l;
-	ppt.level.block_dy = 50 + ppt.level.level * 10;
+	ppt.level.block_dy = 70 + ppt.level.level * 13;
 
 	for (i = 0; i < BLOCK_TYPES; i++) {
 		if (ppt.level.level < block_cutoff[i]) {

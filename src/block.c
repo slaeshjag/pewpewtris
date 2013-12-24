@@ -67,7 +67,7 @@ void block_destroy(int index) {
 
 	/* Add points */
 	ppt.level.blocks++;
-	ppt.ui.score_n += 500;
+	ppt.ui.score_n += 150 + 50 * ppt.level.level;
 	ppt.ui.redraw = 1;
 	level_update();
 
@@ -120,7 +120,7 @@ void block_impact(int index, int damage) {
 		
 	}
 	
-	ppt.ui.score_n += 100;
+	ppt.ui.score_n += 10 * ppt.level.level;
 	ppt.ui.redraw = 1;
 
 	return;
