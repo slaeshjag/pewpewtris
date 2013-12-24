@@ -51,6 +51,11 @@ void check_topography_tm(int *buf, int size, int x) {
 			buf[i] = 1;
 			continue;
 		}
+
+		if (i + x < 0) {
+			buf[i] = 1;
+			continue;
+		}
 		
 		for (j = 17; j >= 0; j--)
 			if (ppt.tm->data[10 * j + x + i])

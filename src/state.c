@@ -10,7 +10,7 @@ void state_init() {
 
 void state_loop() {
 	if (ppt.state.new != ppt.state.old) {
-		d_render_fade_in(300, 0, 0, 0);
+		d_render_fade_in(200, 0, 0, 0);
 		if (d_render_fade_status() == 2) {
 			switch (ppt.state.old) {
 				default:
@@ -43,7 +43,7 @@ void state_loop() {
 			}
 
 			ppt.state.old = ppt.state.new;
-			d_render_fade_out(300);
+			d_render_fade_out(200);
 		}
 	}
 

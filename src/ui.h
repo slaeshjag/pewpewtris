@@ -11,6 +11,8 @@
 
 #define	UI_GAME_OVER_DELAY	2000
 
+#define	UI_SOUND_VOLUME		127
+
 
 struct ui {
 	int			angle;
@@ -36,6 +38,10 @@ struct ui {
 	DARNIT_MAP		*highscore_background;
 
 	DARNIT_SPRITE		*player;
+
+	DARNIT_SOUND		*block_hit;
+	DARNIT_SOUND		*block_explode;
+	DARNIT_SOUND		*bullet_shoot;
 };
 
 

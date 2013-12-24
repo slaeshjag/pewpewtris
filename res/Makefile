@@ -16,6 +16,8 @@ default:
 	@darnit-fsimage res/ res.ldi
 	@cat res.ldi >> ../bin/pewpewtris.elf
 	@rm res.ldi
+	@echo " [ LDI] res/sounds"
+	@darnit-fsimage sounds/ ../bin/sounds.ldi
 
 clean:
 	@echo " [ RM ] res/res"

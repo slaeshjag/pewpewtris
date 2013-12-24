@@ -83,9 +83,11 @@ void block_impact(int index, int damage) {
 	if (i >= 0) {
 		if (ppt.tm->data[i] == BLOCK_HP_SOLID)
 			return;
-		else if (ppt.tm->data[i] <= damage)
+		else if (ppt.tm->data[i] <= damage) {
+			d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 			block_destroy(index);
-		else {
+		} else {
+			d_sound_play(ppt.ui.block_hit, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 			ppt.tm->data[i] -= damage;
 			d_tilemap_recalc(ppt.tm);
 		}
@@ -105,9 +107,11 @@ void block_impact(int index, int damage) {
 		if (i >= 0) {
 			if (ppt.tm->data[i] == BLOCK_HP_SOLID)
 				return;
-			else if (ppt.falling.blocks[i] <= damage)
+			else if (ppt.falling.blocks[i] <= damage) {
+				d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				block_destroy(index);
-			else {
+			} else {
+				d_sound_play(ppt.ui.block_hit, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				ppt.falling.blocks[i] -= damage;
 				d_render_tile_set(ppt.tile, l, ppt.falling.blocks[i]);
 			}

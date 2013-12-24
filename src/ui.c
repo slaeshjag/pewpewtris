@@ -14,6 +14,10 @@ void ui_init() {
 
 	ppt.ui.player = d_sprite_load("res/turret.spr", 0, DARNIT_PFORMAT_RGB5A1);
 
+	ppt.ui.block_hit = d_sound_streamed_load("sounds/block_hit.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
+	ppt.ui.block_explode = d_sound_streamed_load("sounds/block_destroy.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
+	ppt.ui.bullet_shoot = d_sound_streamed_load("sounds/bullet_shoot.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
+
 	return;
 }
 
@@ -128,6 +132,7 @@ void ui_loop_playing() {
 		k.a = 1;
 		d_keys_set(k);
 		bullet_fire(0, ppt.ui.angle, 500, -12, ppt.ui.turret_y + 12);
+		d_sound_play(ppt.ui.bullet_shoot, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 	}
 
 	return;
