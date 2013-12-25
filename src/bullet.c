@@ -128,6 +128,7 @@ void bullet_move() {
 			d_particle_emitter_move(ppt.bullet.bullet[i].tail, x + 2, y + 2);
 			hit = 0;
 			if (x > 236 || y < 0 || y >= 428) {
+				ppt.level.bullet_miss++;
 				bullet_eczplode(i, x, y);
 				continue;
 			} else if (d_bbox_test(ppt.bbox, x, y, 5, 5, &hit, 1) > 0) {
@@ -187,6 +188,7 @@ void bullet_fire(int type, int angle, int velocity, int x, int y) {
 	a = bullet_color[(type << 2) + 3];
 	d_particle_color_start(ppt.bullet.bullet[i].tail, r, g, b, a);
 	d_particle_color_start(ppt.bullet.bullet[i].impact, r, g, b, a);
+	ppt.level.bullet_total++;
 
 	return;
 }

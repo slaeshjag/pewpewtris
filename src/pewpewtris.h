@@ -12,6 +12,7 @@
 #include "level.h"
 #include "highscore.h"
 #include "state.h"
+#include "powerup.h"
 
 
 struct {

@@ -18,6 +18,7 @@ void level_init() {
 	ppt.level.blocks = 0;
 	ppt.level.level = 1;
 	ppt.d_y = 0;
+	ppt.level.bullet_total = ppt.level.bullet_miss = 0;
 	level_update();
 	
 	return;

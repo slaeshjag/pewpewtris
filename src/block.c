@@ -69,6 +69,7 @@ void block_destroy(int index) {
 	ppt.level.blocks++;
 	ppt.ui.score_n += 150 + 50 * ppt.level.level;
 	ppt.ui.redraw = 1;
+	powerup_spawn();
 	level_update();
 
 	return;
@@ -147,6 +148,7 @@ void block_move() {
 					//ppt.state.new = STATE_NUM_NEW_HIGHSCORE;
 					ppt.ui.wait_for_name = (highscore_is_new() ? 1 : 0);;
 					ppt.ui.game_over = d_time_get();
+					bullet_kill_all();
 					return;
 					/* Signal game over */
 				}

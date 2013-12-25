@@ -5,6 +5,9 @@ struct level {
 	int			blocks;
 	int			block_dy;
 	int			level;
+
+	int			bullet_miss;
+	int			bullet_total;
 	
 	unsigned int		block_likely[BLOCK_TYPES + 1];
 };
