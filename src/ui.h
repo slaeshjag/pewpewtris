@@ -48,10 +48,12 @@ struct ui {
 void ui_init();
 void ui_init_playing();
 void ui_init_highscore();
+void ui_init_credits();
 void ui_init_mainmenu();
 void ui_loop_menu();
 void ui_loop_playing();
 void ui_loop_highscore();
+void ui_loop_credits();
 void ui_draw_stats();
 void ui_draw_player();
 

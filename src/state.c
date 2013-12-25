@@ -38,6 +38,9 @@ void state_loop() {
 				case STATE_NUM_HIGHSCORE:
 					ui_init_highscore();
 					break;
+				case STATE_NUM_CREDITS:
+					ui_init_credits();
+					break;
 				default:
 					break;
 			}
@@ -98,6 +101,17 @@ void state_loop() {
 			ui_loop_highscore();
 			d_render_blend_disable();
 
+			if (d_keys_get().BUTTON_ACCEPT) {
+				d_keys_set(d_keys_get());
+				ppt.state.new = STATE_NUM_MAIN_MENU;
+			}
+			break;
+		case STATE_NUM_CREDITS:
+			d_tilemap_draw(ppt.ui.highscore_background->layer[0].tilemap);
+			d_render_blend_enable();
+			ui_loop_credits();
+			d_render_blend_disable();
+			
 			if (d_keys_get().BUTTON_ACCEPT) {
 				d_keys_set(d_keys_get());
 				ppt.state.new = STATE_NUM_MAIN_MENU;
