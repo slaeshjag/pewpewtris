@@ -10,8 +10,7 @@
 #define	TURRET_DEFAULT_Y	204
 
 #define	UI_GAME_OVER_DELAY	2000
-
-#define	UI_SOUND_VOLUME		127
+#define	UI_SOUND_VOLUME		ppt.config.sfx_vol
 
 
 struct ui {

@@ -75,6 +75,7 @@ static void init() {
 	d_fs_mount_self();
 	d_fs_mount("music.ldi");
 	d_fs_mount("sounds.ldi");
+	config_init();
 	
 	ppt.ui.offset_x = 288;
 	ppt.ui.offset_y = 0;

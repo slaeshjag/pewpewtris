@@ -13,6 +13,7 @@
 #include "highscore.h"
 #include "state.h"
 #include "powerup.h"
+#include "config.h"
 
 
 struct {
@@ -32,6 +33,7 @@ struct {
 	struct level			level;
 	struct highscore_file		highscore;
 	struct state			state;
+	struct config			config;
 } ppt;
 
 
