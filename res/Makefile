@@ -18,6 +18,8 @@ default:
 	@rm res.ldi
 	@echo " [ LDI] res/sounds"
 	@darnit-fsimage sounds/ ../bin/sounds.ldi
+	@echo " [ LDI] res/music"
+	@darnit-fsimage music/ ../bin/music.ldi
 
 clean:
 	@echo " [ RM ] res/res"
