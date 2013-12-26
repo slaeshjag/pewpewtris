@@ -9,6 +9,7 @@ void state_init() {
 
 
 void state_loop() {
+	music_loop();
 	if (ppt.state.new != ppt.state.old) {
 		d_render_fade_in(200, 0, 0, 0);
 		if (d_render_fade_status() == 2) {

@@ -6,8 +6,8 @@ void config_init() {
 	DARNIT_FILE *f;
 	char buff[512];
 
-	ppt.config.music_vol = 127;
-	ppt.config.sfx_vol = 63;
+	ppt.config.music_vol = 40;
+	ppt.config.sfx_vol = 31;
 
 	if (!(f = d_file_open("pewpewtris.config", "rb"))) {
 		config_save();

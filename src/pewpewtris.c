@@ -93,6 +93,7 @@ static void init() {
 	bullet_init(30);
 	highscore_init();
 	state_init();
+	music_init();
 	
 	ppt.ui.play_background = d_map_load("res/playfield_background.ldmz");
 	ppt.ui.menu_background = d_map_load("res/mainmenu_background.ldmz");

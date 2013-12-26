@@ -14,6 +14,7 @@
 #include "state.h"
 #include "powerup.h"
 #include "config.h"
+#include "music.h"
 
 
 struct {
@@ -34,6 +35,7 @@ struct {
 	struct highscore_file		highscore;
 	struct state			state;
 	struct config			config;
+	struct music			music;
 } ppt;
 
 
