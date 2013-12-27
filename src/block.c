@@ -10,7 +10,7 @@ int block_get_type() {
 	for (i = 0; i < BLOCK_TYPES; i++)
 		if (b < ppt.level.block_likely[i])
 			return i + 1;
-	return BLOCK_HP_SOLID;
+	return BLOCK_TYPE_SOLID;
 }
 
 
@@ -21,12 +21,12 @@ void block_check_line() {
 		for (j = 0; j < 10; j++)
 			if (!ppt.tm->data[i * 10 + j])
 				break;
-		if (ppt.tm->data[i * 10] == BLOCK_HP_SOLID)
+		if (ppt.tm->data[i * 10] == BLOCK_TYPE_SOLID)
 			continue;
 		if (j < 10)
 			continue;
 		for (j = 0; j < 10; j++)
-			ppt.tm->data[i * 10 + j] = BLOCK_HP_SOLID;
+			ppt.tm->data[i * 10 + j] = BLOCK_TYPE_SOLID;
 	}
 
 	return;
@@ -82,15 +82,23 @@ void block_impact(int index, int damage) {
 	i = ppt.tile_lookup[index];
 
 	if (i >= 0) {
-		if (ppt.tm->data[i] == BLOCK_HP_SOLID)
-			return;
-		else if (ppt.tm->data[i] <= damage) {
-			d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
-			block_destroy(index);
-		} else {
-			d_sound_play(ppt.ui.block_hit, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
-			ppt.tm->data[i] -= damage;
-			d_tilemap_recalc(ppt.tm);
+		switch (ppt.tm->data[i]) {
+			case BLOCK_TYPE_SOLID:
+				return;
+			case BLOCK_TYPE_GATLINGG:
+				return;
+			case BLOCK_TYPE_NUKE:
+				return;
+			default:
+				if (ppt.tm->data[i] <= damage) {
+					d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
+					block_destroy(index);
+				} else {
+					d_sound_play(ppt.ui.block_hit, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
+					ppt.tm->data[i] -= damage;
+					d_tilemap_recalc(ppt.tm);
+				}
+				break;
 		}
 	} else {
 		for (i = f = 0, j = -1; i < 4; i++)
@@ -106,9 +114,7 @@ void block_impact(int index, int damage) {
 				k++;
 		i--;
 		if (i >= 0) {
-			if (ppt.tm->data[i] == BLOCK_HP_SOLID)
-				return;
-			else if (ppt.falling.blocks[i] <= damage) {
+			if (ppt.falling.blocks[i] <= damage) {
 				d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				block_destroy(index);
 			} else {

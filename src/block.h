@@ -1,8 +1,18 @@
 #ifndef __BLOCK_H__
 #define	__BLOCK_H__
 
-#define	BLOCK_HP_SOLID		20
 #define	BLOCK_TYPES		4
+
+enum block_type {
+	BLOCK_TYPE_NONE		= 0,
+	BLOCK_TYPE_1		= 1,
+	BLOCK_TYPE_2		= 2,
+	BLOCK_TYPE_3		= 3,
+	BLOCK_TYPE_4		= 4,
+	BLOCK_TYPE_SOLID	= 20,
+	BLOCK_TYPE_GATLINGG	= 21,
+	BLOCK_TYPE_NUKE		= 22,
+};
 
 #ifdef REQUIRE_DATA
 

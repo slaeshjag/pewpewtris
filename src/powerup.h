@@ -4,8 +4,8 @@
 
 /* How many percent accuracy before powerups are even enabled */
 /* This is actually the miss ratio */
-#define	POWERUP_THRESHOLD	30
-#define	POWERUP_LIKELY_SPAWN	50
+#define	POWERUP_THRESHOLD	70
+#define	POWERUP_LIKELY_SPAWN	10
 
 void powerup_spawn();
 
