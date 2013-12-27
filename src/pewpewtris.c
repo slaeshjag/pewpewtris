@@ -98,10 +98,15 @@ static void init() {
 	ppt.ui.play_background = d_map_load("res/playfield_background.ldmz");
 	ppt.ui.menu_background = d_map_load("res/mainmenu_background.ldmz");
 	ppt.ui.highscore_background = d_map_load("res/highscore_background.ldmz");
+
+
+	/* FIXME: Remove */
+	ppt.fps = d_text_surface_new(ppt.font, 6, 1000, 0, 0);
 }
 
 
 int main(int argc, char **argv) {
+	char fps[6];
 	init();
 
 	d_tilemap_camera_move(ppt.tm, -ppt.ui.offset_x, -ppt.ui.offset_y);
@@ -110,6 +115,14 @@ int main(int argc, char **argv) {
 		d_render_begin();
 
 		state_loop();
+
+		/* FIXME: Remove */
+		sprintf(fps, "%i", d_fps());
+		d_text_surface_reset(ppt.fps);
+		d_text_surface_string_append(ppt.fps, fps);
+		d_render_blend_enable();
+		d_text_surface_draw(ppt.fps);
+		d_render_blend_disable();
 
 		d_render_end();
 		d_loop();

@@ -36,6 +36,9 @@ struct {
 	struct state			state;
 	struct config			config;
 	struct music			music;
+
+	/* TODO: Remove */
+	DARNIT_TEXT_SURFACE		*fps;
 } ppt;
 
 
