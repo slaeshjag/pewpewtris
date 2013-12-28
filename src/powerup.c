@@ -1,3 +1,4 @@
+#define	REQUIRE_POWERUP_DATA
 #include "pewpewtris.h"
 
 
@@ -21,25 +22,21 @@ void powerup_attempt_spawn(int block) {
 
 
 void powerup_spawn() {
-	int miss_ratio, likely_gat, likely_nuke, q;
+	int miss_ratio, t, i;
 
 	if (ppt.level.level <3)
 		return;
 	
-	miss_ratio = ppt.level.bullet_miss * 100 / ppt.level.bullet_total;
+	miss_ratio = ppt.level.bullet_miss * 1000 / ppt.level.bullet_total;
 	if (miss_ratio > POWERUP_THRESHOLD)
 		return;
 	if (rand() % POWERUP_LIKELY_SPAWN)
 		return;
 
-	likely_gat = miss_ratio;
-	likely_nuke = POWERUP_THRESHOLD - miss_ratio;
-
-	q = rand() % (likely_gat + likely_nuke);
-
-	if (q < likely_gat)
-		powerup_attempt_spawn(BLOCK_TYPE_GATLINGG);
-	else
-		powerup_attempt_spawn(BLOCK_TYPE_NUKE);
+	for (i = 0; i < POWERUP_COUNT; i++)
+		if (powerup_threshold[i] < miss_ratio)
+			return;
+	t = rand() % i;
+	powerup_attempt_spawn(t);
 	return;
 }
