@@ -70,6 +70,7 @@ void check_topography_tm(int *buf, int size, int x) {
 
 static void init() {
 	int i;
+	DARNIT_INPUT_MAP map;
 
 	d_init("pewpewtris", "pewpewtris", NULL);
 	d_fs_mount_self();
@@ -98,6 +99,13 @@ static void init() {
 	ppt.ui.play_background = d_map_load("res/playfield_background.ldmz");
 	ppt.ui.menu_background = d_map_load("res/mainmenu_background.ldmz");
 	ppt.ui.highscore_background = d_map_load("res/highscore_background.ldmz");
+
+	/* Re-map B to space */
+	if (!(d_platform_get().platform & DARNIT_PLATFORM_PANDORA)) {
+		map = d_keymapping_get();
+		map.b = TPW_KEY_SPACE;
+		d_keymapping_set(map);
+	}
 
 
 	/* FIXME: Remove */
