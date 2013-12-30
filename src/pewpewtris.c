@@ -118,6 +118,7 @@ int main(int argc, char **argv) {
 	init();
 
 	d_tilemap_camera_move(ppt.tm, -ppt.ui.offset_x, -ppt.ui.offset_y);
+	*fps = 0;
 
 	for (;;) {
 		d_render_begin();

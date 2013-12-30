@@ -14,6 +14,7 @@ void ui_init() {
 
 	ppt.ui.player = d_sprite_load("res/turret.spr", 0, DARNIT_PFORMAT_RGB5A1);
 
+	ppt.ui.aim_line = d_render_line_new(1, 1);
 	ppt.ui.block_hit = d_sound_streamed_load("sounds/block_hit.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
 	ppt.ui.block_explode = d_sound_streamed_load("sounds/block_destroy.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
 	ppt.ui.bullet_shoot = d_sound_streamed_load("sounds/bullet_shoot.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
@@ -93,7 +94,7 @@ void ui_draw_player() {
 
 
 void ui_loop_playing() {
-	int js0_x, js0_y, angle, js1_y, y;
+	int js0_x, js0_y, angle, js1_y, y, x;
 	float a, b, t;
 	DARNIT_KEYS k;
 
@@ -141,6 +142,11 @@ void ui_loop_playing() {
 		d_sprite_move(ppt.ui.player, ppt.ui.turret_x, ppt.ui.turret_y);
 	if (ppt.ui.angle != angle)
 		d_sprite_rotate(ppt.ui.player, -ppt.ui.angle);
+	
+
+	x = ppt.ui.turret_x + 12;
+	y = ppt.ui.turret_y + 12;
+	d_render_line_move(ppt.ui.aim_line, 0, x, y, (d_util_sin((900 + ppt.ui.angle)) * 1000) / 32768 + x, (d_util_sin(ppt.ui.angle) * 1000) / 32768 + y);
 	
 	if (d_keys_get().a) {
 		k = d_keys_zero();

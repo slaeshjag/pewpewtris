@@ -36,6 +36,8 @@ struct ui {
 	DARNIT_MAP		*menu_background;
 	DARNIT_MAP		*highscore_background;
 
+	DARNIT_LINE		*aim_line;
+
 	DARNIT_SPRITE		*player;
 
 	DARNIT_SOUND		*block_hit;
