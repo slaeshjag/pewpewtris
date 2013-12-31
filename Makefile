@@ -5,6 +5,7 @@ TOPDIR		=	$(shell pwd)
 export TOPDIR
 
 default:
+	@mkdir -p bin/
 	@echo " [ CD ] src/"
 	+@make -C src/
 	@echo " [ CD ] res/"
@@ -13,6 +14,7 @@ default:
 	@echo  
 
 clean:
+	@rm -Rf bin/
 	@echo " [ CD ] src/"
 	+@make -C src/ clean
 	@echo " [ CD ] res/"

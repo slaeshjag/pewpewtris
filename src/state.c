@@ -65,10 +65,11 @@ void state_loop() {
 
 			ui_loop_playing();
 
+			d_render_offset(0, 0);
+			d_render_line_draw(ppt.ui.aim_line, 1);
 			d_render_offset(-ppt.bs_x - ppt.ui.offset_x, -ppt.bs_y - ppt.ui.offset_y);
 			d_render_tile_draw(ppt.tile, 4);
 			d_render_offset(0, 0);
-			d_render_line_draw(ppt.ui.aim_line, 1);
 			d_tilemap_draw(ppt.tm);
 			d_tilemap_draw(ppt.ui.play_background->layer[0].tilemap);
 			d_render_offset(-ppt.ui.offset_x, -ppt.ui.offset_y);

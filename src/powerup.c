@@ -6,14 +6,11 @@
 void powerup_attempt_spawn(int block) {
 	int i;
 
-	fprintf(stderr, "Attempt to spawn %i\n", block);
 	i = rand() % (10 * 12);	/* Only spawn in the lower 12 rows */
 	i += 10 * 6;
 
-	if (!ppt.tm->data[i]) {
-		fprintf(stderr, "Nothing to replace here\n");
+	if (!ppt.tm->data[i])
 		return;
-	}
 	ppt.tm->data[i] = block;
 	d_tilemap_recalc(ppt.tm);
 
@@ -37,6 +34,6 @@ void powerup_spawn() {
 		if (powerup_threshold[i] < miss_ratio)
 			break;
 	t = rand() % i;
-	powerup_attempt_spawn(t);
+	powerup_attempt_spawn(t + POWERUP_BASE);
 	return;
 }
