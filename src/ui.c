@@ -31,6 +31,7 @@ void ui_init_playing() {
 	ppt.ui.redraw = 1;
 	ppt.ui.game_over = 0;
 	ppt.request_new = 1;
+	ppt.ui.gatling_ammo = 0;
 	ppt.bs_y = 0;
 
 	memset(ppt.tm->data, 0, sizeof(int) * ppt.tm->w * ppt.tm->h);

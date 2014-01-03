@@ -37,3 +37,17 @@ void powerup_spawn() {
 	powerup_attempt_spawn(t + POWERUP_BASE);
 	return;
 }
+
+
+void powerup_add(int powerup) {
+	switch (powerup) {
+		case POWERUP_NUM_GATLINGG:
+			ppt.ui.gatling_ammo += POWERUP_GATLING_AMMO_PACK;
+			break;
+		default:
+			fprintf(stderr, "Unimplemented powerup %i\n", powerup);
+			break;
+	}
+
+	return;
+}

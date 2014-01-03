@@ -7,6 +7,7 @@
 #define	POWERUP_THRESHOLD	700
 #define	POWERUP_LIKELY_SPAWN	10
 
+#define	POWERUP_GATLING_AMMO_PACK 200
 #define	POWERUP_BASE		21
 #define	POWERUP_COUNT		2
 
@@ -19,6 +20,13 @@ static const int powerup_threshold[] = {
 #endif
 
 
+enum powerup_num {
+	POWERUP_NUM_GATLINGG,
+	POWERUP_NUM_NUKE,
+};
+
+
 void powerup_spawn();
+void powerup_add(int powerup);
 
 #endif

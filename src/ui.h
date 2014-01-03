@@ -24,6 +24,9 @@ struct ui {
 
 	int			turret_x;
 	int			turret_y;
+
+	int			gatling_ammo;
+
 	DARNIT_TEXT_SURFACE	*score;
 	DARNIT_TEXT_SURFACE	*level;
 	DARNIT_TEXT_SURFACE	*highscore;

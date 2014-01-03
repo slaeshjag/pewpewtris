@@ -86,8 +86,10 @@ void block_impact(int index, int damage) {
 			case BLOCK_TYPE_SOLID:
 				return;
 			case BLOCK_TYPE_GATLINGG:
-				return;
 			case BLOCK_TYPE_NUKE:
+				powerup_add(ppt.tm->data[i] - POWERUP_BASE);
+				block_destroy(index);
+				/* TODO: Powerup sound effect */
 				return;
 			default:
 				if (ppt.tm->data[i] <= damage) {
@@ -98,6 +100,7 @@ void block_impact(int index, int damage) {
 					ppt.tm->data[i] -= damage;
 					d_tilemap_recalc(ppt.tm);
 				}
+
 				break;
 		}
 	} else {
