@@ -9,6 +9,7 @@
 #define	TURRET_DEFAULT_X	264
 #define	TURRET_DEFAULT_Y	204
 
+#define	UI_GATLING_RELOAD	30
 #define	UI_GAME_OVER_DELAY	2000
 #define	UI_SOUND_VOLUME		ppt.config.sfx_vol
 
@@ -19,6 +20,7 @@ struct ui {
 	int			redraw;
 	int			offset_x;
 	int			offset_y;
+	unsigned int		gatling_last;
 	unsigned int		game_over;
 	int			wait_for_name;
 
