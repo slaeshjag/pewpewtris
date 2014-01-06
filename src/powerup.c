@@ -51,3 +51,19 @@ void powerup_add(int powerup) {
 
 	return;
 }
+
+
+void powerup_nuke_do() {
+	int i, blocks;
+	unsigned int block[180];
+
+	blocks = d_bbox_test(ppt.bbox, 0, 0, 1000, 1000, block, 180);
+
+	for (i = 0; i < blocks; i++) {
+		if (!(ppt.tm->data[block[i]] & 0xFF))
+			continue;
+		block_destroy(block[i]);
+	}
+
+	return;
+}
