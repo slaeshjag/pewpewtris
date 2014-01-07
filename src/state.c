@@ -26,6 +26,7 @@ void state_loop() {
 					d_loop();
 					d_loop();
 					ui_init_playing();
+					block_particle_reset();
 					level_init();
 					break;
 				case STATE_NUM_NEW_HIGHSCORE:
@@ -75,6 +76,7 @@ void state_loop() {
 			d_render_offset(-ppt.ui.offset_x, -ppt.ui.offset_y);
 			d_render_blend_enable();
 			bullet_draw();
+			block_particle_draw();
 			d_render_offset(0, 0);
 			ui_draw_player();
 			ui_draw_stats();

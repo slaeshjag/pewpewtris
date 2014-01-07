@@ -107,6 +107,7 @@ static void init() {
 		d_keymapping_set(map);
 	}
 
+	block_particle_init();
 
 	/* FIXME: Remove */
 	ppt.fps = d_text_surface_new(ppt.font, 6, 1000, 0, 0);

@@ -35,6 +35,7 @@ struct {
 	struct highscore_file		highscore;
 	struct state			state;
 	struct config			config;
+	struct block_particle		b_particle;
 	struct music			music;
 
 	/* TODO: Remove */

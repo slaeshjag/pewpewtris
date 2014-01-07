@@ -76,6 +76,11 @@ struct block_struct {
 	int		first_check;
 };
 
+struct block_particle {
+	DARNIT_PARTICLE	*p[180];
+	int		used[180];
+};
+
 struct block_struct block_new();
 struct block_struct block_rotate(struct block_struct bs);
 void block_check_line();
@@ -84,5 +89,12 @@ void block_move_loop();
 void block_get_new();
 void block_destroy(int index);
 void block_impact(int index, int damage);
+
+
+void block_particle_init();
+void block_particle_reset();
+void block_color(int id, int *r, int *g, int *b);
+void block_particle_trig(int x, int y, int r, int g, int b);
+void block_particle_draw();
 
 #endif

@@ -34,12 +34,16 @@ void block_check_line() {
 
 
 void block_destroy(int index) {
-	int i, j, k, f;
+	int i, j, k, f, x, y, r, g, b;
 
 	i = ppt.tile_lookup[index];
 	if (i >= 0) {
-		ppt.tm->data[i] = 0;
+		x = ppt.tile_lookup[index] % 10;
+		y = ppt.tile_lookup[index] / 10;
+		block_color(ppt.tm->data[i] & 0xFF, &r, &g, &b);
+		block_particle_trig(x * 24 + 12, y * 24 + 12, r, g, b);
 		ppt.tile_lookup[index] = -1;
+		ppt.tm->data[i] = 0;
 		d_tilemap_recalc(ppt.tm);
 	} else {
 		for (i = f = 0, j = -1; i < 4; i++)
@@ -290,4 +294,75 @@ struct block_struct block_new() {
 	/* TODO: Add block id */
 
 	return bs;
+}
+
+
+void block_particle_init() {
+	int i;
+
+	for (i = 0; i < 180; i++) {
+		ppt.b_particle.used[i] = 0;
+		ppt.b_particle.p[i] = d_particle_new(60, DARNIT_PARTICLE_TYPE_POINT);
+		d_particle_color_target(ppt.b_particle.p[i], 0, 0, 0, 0);
+		d_particle_emitter_velocity(ppt.b_particle.p[i], 0, 64);
+		d_particle_emitter_gravity(ppt.b_particle.p[i], 0, 200);
+		d_particle_life(ppt.b_particle.p[i], 600);
+		d_particle_point_size(ppt.b_particle.p[i], 2);
+		d_particle_emitter_angle(ppt.b_particle.p[i], 0, 3599);
+		d_particle_mode(ppt.b_particle.p[i], DARNIT_PARTICLE_MODE_PULSAR);
+	}
+
+	return;
+}
+
+
+void block_particle_reset() {
+	int i;
+
+	for (i = 0; i < 180; i++) {
+		d_particle_clear_all(ppt.b_particle.p[i]);
+		ppt.b_particle.used[i] = 0;
+	}
+
+	return;
+}
+
+
+void block_particle_trig(int x, int y, int r, int g, int b) {
+	int i;
+
+	for (i = 0; i < 180 && ppt.b_particle.used[i]; i++);
+	if (i == 180)
+		return;
+	d_particle_emitter_move(ppt.b_particle.p[i], x, y);
+	d_particle_color_start(ppt.b_particle.p[i], r, g, b, 255);
+	d_particle_pulse(ppt.b_particle.p[i]);
+	ppt.b_particle.used[i] = 1;
+
+	return;
+}
+
+void block_particle_draw() {
+	int i;
+
+	for (i = 0; i < 180; i++) {
+		if (!ppt.b_particle.used[i])
+			continue;
+		d_particle_draw(ppt.b_particle.p[i]);
+		if (!d_particle_used(ppt.b_particle.p[i]))
+			ppt.b_particle.used[i] = 0;
+	}
+
+	return;
+}
+
+
+void block_color(int id, int *r, int *g, int *b) {
+	/* TODO: Real values */
+
+	*r = 255;
+	*g = 255;
+	*b = 255;
+
+	return;
 }
