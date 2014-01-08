@@ -28,5 +28,6 @@ enum powerup_num {
 
 void powerup_spawn();
 void powerup_add(int powerup);
+void powerup_nuke_do();
 
 #endif

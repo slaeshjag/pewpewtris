@@ -33,6 +33,8 @@ void ui_init_playing() {
 	ppt.request_new = 1;
 	ppt.ui.gatling_ammo = 1000;
 	ppt.ui.gatling_last = 0;
+	ppt.ui.nukes = 1;
+	ppt.ui.nuke_going = 0;
 	ppt.bs_y = 0;
 
 	memset(ppt.tm->data, 0, sizeof(int) * ppt.tm->w * ppt.tm->h);
@@ -164,6 +166,17 @@ void ui_loop_playing() {
 		bullet_fire(0, ppt.ui.angle, 500, -12, ppt.ui.turret_y + 12);
 		d_sound_play(ppt.ui.bullet_shoot, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 	}
+
+	if (d_keys_get().y && !ppt.ui.nuke_going && ppt.ui.nukes) {
+		ppt.ui.nukes--;
+		ppt.ui.nuke_going = 1;
+		k = d_keys_zero();
+		k.y = 1;
+		d_keys_set(k);
+	}
+
+	if (ppt.ui.nuke_going)
+		powerup_nuke_do();
 
 	return;
 }

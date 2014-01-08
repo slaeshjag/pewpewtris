@@ -145,7 +145,7 @@ void block_move() {
 	int top[4], block[4], i, j, k, ind;
 	ppt.bs_y += 1;
 
-	if (ppt.request_new)
+	if (ppt.request_new && !ppt.ui.nuke_going)
 		ppt.request_new = 0, block_get_new();
 
 	if (ppt.bs_y % 24 == 0 || ppt.falling.first_check) {

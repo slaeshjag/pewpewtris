@@ -28,6 +28,8 @@ struct ui {
 	int			turret_y;
 
 	int			gatling_ammo;
+	int			nukes;
+	int			nuke_going;
 
 	DARNIT_TEXT_SURFACE	*score;
 	DARNIT_TEXT_SURFACE	*level;

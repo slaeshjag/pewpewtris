@@ -44,6 +44,9 @@ void powerup_add(int powerup) {
 		case POWERUP_NUM_GATLINGG:
 			ppt.ui.gatling_ammo += POWERUP_GATLING_AMMO_PACK;
 			break;
+		case POWERUP_NUM_NUKE:
+			ppt.ui.nukes++;
+			break;
 		default:
 			fprintf(stderr, "Unimplemented powerup %i\n", powerup);
 			break;
@@ -55,15 +58,17 @@ void powerup_add(int powerup) {
 
 void powerup_nuke_do() {
 	int i, blocks;
-	unsigned int block[180];
+	unsigned int block[2];
 
-	blocks = d_bbox_test(ppt.bbox, 0, 0, 1000, 1000, block, 180);
+	blocks = d_bbox_test(ppt.bbox, 0, 0, 1000, 1000, block, 2);
 
 	for (i = 0; i < blocks; i++) {
-		if (!(ppt.tm->data[block[i]] & 0xFF))
-			continue;
+		d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 		block_destroy(block[i]);
 	}
+
+	if (blocks < 2)
+		ppt.ui.nuke_going = 0;
 
 	return;
 }
