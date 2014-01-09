@@ -48,6 +48,11 @@ void block_destroy(int index) {
 	} else {
 		for (i = f = 0, j = -1; i < 4; i++)
 			if (ppt.falling.box_id[i] == index) {
+				for (k = b = 0; b != i; k++)
+					if (ppt.falling.blocks[k])
+						b++;
+				block_color(ppt.falling.blocks[k - 1] & 0xFF, &r, &g, &b);
+				block_particle_trig(ppt.falling.x[i] + 12, ppt.falling.y[i] + 12, r, g, b);
 				ppt.falling.box_id[i] = -1, j = i;
 				d_render_tile_move(ppt.tile, j, INT_MAX, INT_MAX);
 				break;
@@ -190,14 +195,17 @@ void block_move() {
 		ppt.falling.first_check = 0;
 	}
 	
-	for (i = j = 0; i < 16; i++) {
+	for (i = j = k = 0; i < 16; i++) {
 		if (ppt.falling.box_id[j] == -1) {
 			j++, i--;
 			continue;
 		}
 
-		if (ppt.falling.blocks[i])
+		if (ppt.falling.blocks[i]) {
+			ppt.falling.x[j] = ppt.bs_x + (i % 4) * 24;
+			ppt.falling.y[j] = ppt.bs_y + (i / 4 * 24);
 			d_bbox_move(ppt.bbox, ppt.falling.box_id[j++], ppt.bs_x + (i % 4) * 24, ppt.bs_y + (i / 4 * 24));
+		}
 	}
 
 	return;
@@ -360,9 +368,16 @@ void block_particle_draw() {
 void block_color(int id, int *r, int *g, int *b) {
 	/* TODO: Real values */
 
-	*r = 255;
-	*g = 255;
-	*b = 255;
+	if (id >= sizeof(block_color_a) / 4) {
+		*r = 255;
+		*g = 255;
+		*b = 255;
+		return;
+	}
+
+	*r = block_color_a[id * 4];
+	*g = block_color_a[id * 4 + 1];
+	*b = block_color_a[id * 4 + 2];
 
 	return;
 }

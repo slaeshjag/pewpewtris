@@ -68,11 +68,24 @@ char block_6[] = {
 	0, 0, 0, 0
 };
 
+static unsigned char block_color_a[] = {
+	0, 0, 0, 0,
+	0, 0, 255, 255,
+	255, 0, 255, 255,
+	255, 0, 0, 255,
+	219, 219, 0, 255,
+};
+
+
+
 #endif
+
 
 struct block_struct {
 	char		blocks[16];
 	int		box_id[4];
+	int		x[4];
+	int		y[4];
 	int		first_check;
 };
 
