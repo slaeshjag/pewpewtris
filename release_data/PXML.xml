@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PXML xmlns="http://openpandora.org/namespaces/PXML">
+	<package id="pewpewtris-slaeshjag">
+		<version major="0" minor="1" release="0" build="0" type="alpha" />
+		<author name="Slaeshjag" website="http://slaeshjag.org" />
+		<titles> 
+			<title lang="en_US">Pewpewtris</title>
+		</titles>
+		<descriptions>
+			<description lang="en_US">Tetris inverted, shoot the blocks to bits before the AI fills the field!</description>
+		</descriptions> 
+		<icon src="icon.png" />
+	</package>
+	
+	<application id="pewpewtris-slaeshjag-egegheew" appdata="pewpewtris">
+		<title lang="en_US">Pewpewtris</title>
+		<description lang="en_US">Tetris inverted, shoot the blocks to bits before the AI fills the field!</description>
+		<version major="0" minor="1" release="0" build="0" type="alpha" />
+		<exec command="./pewpewtris_pandora.sh" background="true" standalone="true"/>
+		<author name="Slaeshjag" website="http://slaeshjag.org/" />
+		<icon src="icon.png"/>
+		<licenses>
+			<license name="GPLv3+" url="http://www.gnu.org/licenses/gpl.html" sourcecodeurl="https://github.com/slaeshjag/pewpewtris/archive/master.zip"/>
+		</licenses>
+
+		<previewpics>
+			<pic src="muon-1.0.png"/>
+<!--			<pic src="previewpics/preview2.png"/>
+			<pic src="previewpics/preview3.png"/>
+			<pic src="previewpics/preview4.png"/> -->
+		</previewpics>
+		<categories>
+			<category name="Game">
+				<subcategory name="ArcadeGame" />
+			</category>
+		</categories>
+	</application>
+</PXML>	

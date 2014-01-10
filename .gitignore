@@ -5,6 +5,7 @@
 *.so
 *.swp
 *.ldmz
+*.pnd
 res/res
 timelapse/frames
 screenshot.png

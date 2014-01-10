@@ -310,12 +310,12 @@ void block_particle_init() {
 
 	for (i = 0; i < 180; i++) {
 		ppt.b_particle.used[i] = 0;
-		ppt.b_particle.p[i] = d_particle_new(60, DARNIT_PARTICLE_TYPE_POINT);
+		ppt.b_particle.p[i] = d_particle_new(30, DARNIT_PARTICLE_TYPE_POINT);
 		d_particle_color_target(ppt.b_particle.p[i], 0, 0, 0, 0);
 		d_particle_emitter_velocity(ppt.b_particle.p[i], 0, 64);
 		d_particle_emitter_gravity(ppt.b_particle.p[i], 0, 200);
 		d_particle_life(ppt.b_particle.p[i], 600);
-		d_particle_point_size(ppt.b_particle.p[i], 2);
+		d_particle_point_size(ppt.b_particle.p[i], 3);
 		d_particle_emitter_angle(ppt.b_particle.p[i], 0, 3599);
 		d_particle_mode(ppt.b_particle.p[i], DARNIT_PARTICLE_MODE_PULSAR);
 	}

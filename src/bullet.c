@@ -8,7 +8,7 @@ void bullet_init_tail(DARNIT_PARTICLE *p) {
 	d_particle_emitter_velocity(p, 0, 256);
 	d_particle_emitter_gravity(p, 0, 200);
 	d_particle_life(p, 200);
-	d_particle_point_size(p, 2);
+	d_particle_point_size(p, 3);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_SHOWER);
 
 	return;
@@ -20,7 +20,7 @@ void bullet_init_impact(DARNIT_PARTICLE *p) {
 	d_particle_emitter_velocity(p, 0, 64);
 	d_particle_emitter_gravity(p, 0, 200);
 	d_particle_life(p, 600);
-	d_particle_point_size(p, 2);
+	d_particle_point_size(p, 3);
 	d_particle_mode(p, DARNIT_PARTICLE_MODE_PULSAR);
 
 	return;
@@ -38,8 +38,8 @@ void bullet_init(int max_bullets) {
 	for (i = 0; i < max_bullets; i++) {
 		d_render_tile_move(ppt.bullet.tile, i, INT_MAX, INT_MAX);
 		ppt.bullet.bullet[i].mode = BULLET_MODE_WAITING;
-		ppt.bullet.bullet[i].tail = d_particle_new(60, DARNIT_PARTICLE_TYPE_POINT);
-		ppt.bullet.bullet[i].impact = d_particle_new(60, DARNIT_PARTICLE_TYPE_POINT);
+		ppt.bullet.bullet[i].tail = d_particle_new(40, DARNIT_PARTICLE_TYPE_POINT);
+		ppt.bullet.bullet[i].impact = d_particle_new(40, DARNIT_PARTICLE_TYPE_POINT);
 		bullet_init_tail(ppt.bullet.bullet[i].tail);
 		bullet_init_impact(ppt.bullet.bullet[i].impact);
 	}
