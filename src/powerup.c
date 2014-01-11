@@ -23,6 +23,8 @@ void powerup_spawn() {
 
 	if (ppt.level.level <3)
 		return;
+	if (ppt.ui.nuke_going)
+		return;
 	
 	miss_ratio = ppt.level.bullet_miss * 1000 / ppt.level.bullet_total;
 	if (miss_ratio > POWERUP_THRESHOLD)

@@ -42,6 +42,9 @@ void block_destroy(int index) {
 		y = ppt.tile_lookup[index] / 10;
 		block_color(ppt.tm->data[i] & 0xFF, &r, &g, &b);
 		block_particle_trig(x * 24 + 12, y * 24 + 12, r, g, b);
+		if (ppt.tm->data[ppt.tile_lookup[index]] >= POWERUP_BASE)
+			powerup_add(ppt.tm->data[i] - POWERUP_BASE);
+		
 		ppt.tile_lookup[index] = -1;
 		ppt.tm->data[i] = 0;
 		d_tilemap_recalc(ppt.tm);
@@ -97,7 +100,6 @@ void block_impact(int index, int damage) {
 			case BLOCK_TYPE_GATLINGG:
 			case BLOCK_TYPE_NUKE:
 				powerup_add(ppt.tm->data[i] - POWERUP_BASE);
-				block_destroy(index);
 				/* TODO: Powerup sound effect */
 				return;
 			default:

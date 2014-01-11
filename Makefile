@@ -27,6 +27,7 @@ pandora: default
 
 clean:
 	@rm -Rf bin/
+	@rm -Rf pewpewtris.pnd
 	@echo " [ CD ] src/"
 	+@make -C src/ clean
 	@echo " [ CD ] res/"

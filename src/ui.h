@@ -46,6 +46,7 @@ struct ui {
 	DARNIT_LINE		*aim_line;
 
 	DARNIT_SPRITE		*player;
+	DARNIT_SPRITE		*dragonbox;
 
 	DARNIT_SOUND		*block_hit;
 	DARNIT_SOUND		*block_explode;
