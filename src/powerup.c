@@ -44,7 +44,7 @@ void powerup_spawn() {
 void powerup_add(int powerup) {
 	switch (powerup) {
 		case POWERUP_NUM_GATLINGG:
-			ppt.ui.gatling_ammo += POWERUP_GATLING_AMMO_PACK;
+			ppt.ui.gatling_reload_time -= 10;
 			break;
 		case POWERUP_NUM_NUKE:
 			ppt.ui.nukes++;

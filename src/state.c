@@ -55,7 +55,6 @@ void state_loop() {
 	switch (ppt.state.old) {
 		case STATE_NUM_MAIN_MENU:
 			d_tilemap_draw(ppt.ui.menu_background->layer[0].tilemap);
-			d_sprite_draw(ppt.ui.dragonbox);
 			d_render_blend_enable();
 			ui_loop_menu();
 			d_render_blend_disable();
@@ -114,6 +113,7 @@ void state_loop() {
 			break;
 		case STATE_NUM_CREDITS:
 			d_tilemap_draw(ppt.ui.highscore_background->layer[0].tilemap);
+			d_sprite_draw(ppt.ui.dragonbox);
 			d_render_blend_enable();
 			ui_loop_credits();
 			d_render_blend_disable();

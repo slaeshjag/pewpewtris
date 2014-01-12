@@ -27,7 +27,7 @@ struct ui {
 	int			turret_x;
 	int			turret_y;
 
-	int			gatling_ammo;
+	int			gatling_reload_time;
 	int			nukes;
 	int			nuke_going;
 

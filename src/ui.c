@@ -32,11 +32,11 @@ void ui_init_playing() {
 	ppt.ui.redraw = 1;
 	ppt.ui.game_over = 0;
 	ppt.request_new = 1;
-	ppt.ui.gatling_ammo = 1000;
 	ppt.ui.gatling_last = 0;
 	ppt.ui.nukes = 1;
 	ppt.ui.nuke_going = 0;
 	ppt.bs_y = 0;
+	ppt.ui.gatling_reload_time = 500;
 
 	memset(ppt.tm->data, 0, sizeof(int) * ppt.tm->w * ppt.tm->h);
 	memset(ppt.tile_lookup, 0xFF, sizeof(int) * ppt.tm->w * ppt.tm->h);
@@ -154,17 +154,10 @@ void ui_loop_playing() {
 	y = ppt.ui.turret_y + 12;
 	d_render_line_move(ppt.ui.aim_line, 0, x, y, (d_util_sin((900 + ppt.ui.angle)) * 1000) / 32768 + x, (d_util_sin(ppt.ui.angle) * 1000) / 32768 + y);
 	
-	if (d_keys_get().a) {
-		k = d_keys_zero();
-		k.a = 1;
-		d_keys_set(k);
-		bullet_fire(0, ppt.ui.angle, 500, -12, ppt.ui.turret_y + 12);
-		d_sound_play(ppt.ui.bullet_shoot, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
-	} else if (d_keys_get().x) {
-		if (d_time_get() - ppt.ui.gatling_last < UI_GATLING_RELOAD || !ppt.ui.gatling_ammo)
+	if (d_keys_get().x) {
+		if (d_time_get() - ppt.ui.gatling_last < ppt.ui.gatling_reload_time)
 			return;
 		ppt.ui.gatling_last = d_time_get();
-		ppt.ui.gatling_ammo--;
 		bullet_fire(0, ppt.ui.angle, 500, -12, ppt.ui.turret_y + 12);
 		d_sound_play(ppt.ui.bullet_shoot, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 	}
