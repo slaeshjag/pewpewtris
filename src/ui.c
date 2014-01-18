@@ -6,6 +6,7 @@
 void ui_init() {
 	ppt.ui.score = d_text_surface_new(ppt.font, 64, 240, 560, 58);
 	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
+	ppt.ui.accur = d_text_surface_new(ppt.font, 64, 240, 560, 202);
 	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 110, 120);
 	ppt.ui.main_menu = d_menu_vertical_new("New  Game\nHighscore\n Options\n Credits\nQuit Game", 314, 120, ppt.font, 164, 23, 800);
 	ppt.ui.highscore_str[0] = 0;
@@ -224,6 +225,7 @@ void ui_loop_credits() {
 
 void ui_draw_stats() {
 	char buff[64];
+	int acc;
 
 	if (ppt.ui.redraw) {
 		d_text_surface_reset(ppt.ui.score);
@@ -238,10 +240,25 @@ void ui_draw_stats() {
 		sprintf(buff, "%i", ppt.level.level);
 		d_text_surface_string_append(ppt.ui.level, buff);
 
+		d_text_surface_reset(ppt.ui.accur);
+		d_text_surface_string_append(ppt.ui.accur, "Accur:");
+		d_text_surface_offset_next_set(ppt.ui.accur, 100);
+		if (!ppt.level.bullet_total)
+			sprintf(buff, "-");
+		else {
+			acc = ppt.level.bullet_miss * 100 / ppt.level.bullet_total;
+			acc = 100 - acc;
+			sprintf(buff, "%i%%", acc);
+		}
+		d_text_surface_string_append(ppt.ui.accur, buff);
+
+
+
 	}
 
 	d_text_surface_draw(ppt.ui.score);
 	d_text_surface_draw(ppt.ui.level);
+	d_text_surface_draw(ppt.ui.accur);
 	
 	return;
 }

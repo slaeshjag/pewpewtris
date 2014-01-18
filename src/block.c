@@ -100,6 +100,7 @@ void block_impact(int index, int damage) {
 			case BLOCK_TYPE_GATLINGG:
 			case BLOCK_TYPE_NUKE:
 				powerup_add(ppt.tm->data[i] - POWERUP_BASE);
+				block_destroy(index);
 				/* TODO: Powerup sound effect */
 				return;
 			default:

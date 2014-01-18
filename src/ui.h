@@ -33,6 +33,7 @@ struct ui {
 
 	DARNIT_TEXT_SURFACE	*score;
 	DARNIT_TEXT_SURFACE	*level;
+	DARNIT_TEXT_SURFACE	*accur;
 	DARNIT_TEXT_SURFACE	*highscore;
 
 	DARNIT_MENU		*main_menu;
