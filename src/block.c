@@ -1,6 +1,56 @@
 #define	REQUIRE_DATA
 #include "pewpewtris.h"
-#include "limits.h"
+#include <limits.h>
+
+
+void block_set_special(int i) {
+	int t;
+
+	t = ppt.ui.special_tiles[i];
+	d_render_tile_set(ppt.ui.special_tile, i, t);
+	if (t)
+		d_render_tile_move(ppt.ui.special_tile, i, 24 + i * 24, 408);
+	else
+		d_render_tile_move(ppt.ui.special_tile, i, INT_MAX, INT_MAX);
+
+	return;
+}
+
+
+void block_update_specials() {
+	int i;
+
+	for (i = 0; i < 9; i++)
+		block_set_special(i);
+	return;
+}
+
+
+void block_add_special_slot(int t) {
+	int i;
+
+	for (i = 0; i < 9; i++)
+		if (!ppt.ui.special_tiles[i])
+			break;
+	if (i == 9)
+		return;
+	ppt.ui.special_tiles[i] = t;
+	block_set_special(i);
+
+	return;
+}
+	
+
+int block_pop_special_slot() {
+	int i, ret;
+
+	ret = ppt.ui.special_tiles[0];
+	for (i = 1; i < 9; i++)
+		ppt.ui.special_tiles[i - 1] = ppt.ui.special_tiles[i];
+	block_update_specials();
+
+	return ret;
+}
 
 
 int block_get_type() {
@@ -99,7 +149,6 @@ void block_impact(int index, int damage) {
 				return;
 			case BLOCK_TYPE_GATLINGG:
 			case BLOCK_TYPE_NUKE:
-				powerup_add(ppt.tm->data[i] - POWERUP_BASE);
 				block_destroy(index);
 				/* TODO: Powerup sound effect */
 				return;

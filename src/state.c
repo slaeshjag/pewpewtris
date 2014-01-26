@@ -68,6 +68,7 @@ void state_loop() {
 
 			d_render_offset(0, 0);
 			d_render_line_draw(ppt.ui.aim_line, 1);
+			d_render_tile_draw(ppt.ui.special_tile, 9);
 			d_render_offset(-ppt.bs_x - ppt.ui.offset_x, -ppt.bs_y - ppt.ui.offset_y);
 			d_render_tile_draw(ppt.tile, 4);
 			d_render_offset(0, 0);

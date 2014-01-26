@@ -1,5 +1,6 @@
 #include "pewpewtris.h"
 #include <math.h>
+#include <limits.h>
 #define	abs(x)		((x) < 0 ? -(x) : (x))
 
 
@@ -14,6 +15,7 @@ void ui_init() {
 	d_menu_shade_color(ppt.ui.main_menu, 0, 0, 0, 255);
 
 	ppt.ui.player = d_sprite_load("res/turret.spr", 0, DARNIT_PFORMAT_RGB5A1);
+	ppt.ui.special_tile = d_render_tile_new(9, ppt.block);
 	ppt.ui.dragonbox = d_sprite_load("res/dragonbox.spr", 0, DARNIT_PFORMAT_RGB5A1);
 
 	ppt.ui.aim_line = d_render_line_new(1, 1);
@@ -26,6 +28,8 @@ void ui_init() {
 
 
 void ui_init_playing() {
+	int i;
+
 	ppt.ui.angle = 0;
 	ppt.ui.turret_x = TURRET_DEFAULT_X;
 	ppt.ui.turret_y = TURRET_DEFAULT_Y;
@@ -34,7 +38,6 @@ void ui_init_playing() {
 	ppt.ui.game_over = 0;
 	ppt.request_new = 1;
 	ppt.ui.gatling_last = 0;
-	ppt.ui.nukes = 1;
 	ppt.ui.nuke_going = 0;
 	ppt.bs_y = 0;
 	ppt.ui.gatling_reload_time = 500;
@@ -48,6 +51,11 @@ void ui_init_playing() {
 
 	d_sprite_rotate(ppt.ui.player, 0);
 	d_sprite_move(ppt.ui.player, ppt.ui.turret_x, ppt.ui.turret_y);
+
+	for (i = 0; i < 9; i++) {
+		d_render_tile_move(ppt.ui.special_tile, i, INT_MAX, INT_MAX);
+		ppt.ui.special_tiles[i] = 0;
+	}
 }
 
 
@@ -163,9 +171,8 @@ void ui_loop_playing() {
 		d_sound_play(ppt.ui.bullet_shoot, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 	}
 
-	if (d_keys_get().y && !ppt.ui.nuke_going && ppt.ui.nukes) {
-		ppt.ui.nukes--;
-		ppt.ui.nuke_going = 1;
+	if (d_keys_get().y) {
+		powerup_activate();
 		k = d_keys_zero();
 		k.y = 1;
 		d_keys_set(k);

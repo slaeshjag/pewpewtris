@@ -46,11 +46,8 @@ void powerup_add(int powerup) {
 		case POWERUP_NUM_GATLINGG:
 			ppt.ui.gatling_reload_time -= 10;
 			break;
-		case POWERUP_NUM_NUKE:
-			ppt.ui.nukes++;
-			break;
 		default:
-			fprintf(stderr, "Unimplemented powerup %i\n", powerup);
+			block_add_special_slot(powerup + 21);
 			break;
 	}
 
@@ -72,5 +69,18 @@ void powerup_nuke_do() {
 	if (blocks < 2)
 		ppt.ui.nuke_going = 0;
 
+	return;
+}
+
+
+void powerup_activate() {
+	int t;
+
+	t = block_pop_special_slot() - 21;
+	if (t == 1) {	/* Nuke */
+		if (ppt.ui.nuke_going)
+			return;
+		ppt.ui.nuke_going = 1;
+	}
 	return;
 }

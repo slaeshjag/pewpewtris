@@ -28,7 +28,6 @@ struct ui {
 	int			turret_y;
 
 	int			gatling_reload_time;
-	int			nukes;
 	int			nuke_going;
 
 	DARNIT_TEXT_SURFACE	*score;
@@ -52,6 +51,9 @@ struct ui {
 	DARNIT_SOUND		*block_hit;
 	DARNIT_SOUND		*block_explode;
 	DARNIT_SOUND		*bullet_shoot;
+
+	DARNIT_TILE		*special_tile;
+	int			special_tiles[9];
 };
 
 

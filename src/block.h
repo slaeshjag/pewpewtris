@@ -103,6 +103,8 @@ void block_get_new();
 void block_destroy(int index);
 void block_impact(int index, int damage);
 
+void block_add_special_slot(int i);
+int block_pop_special_slot();
 
 void block_particle_init();
 void block_particle_reset();
