@@ -150,7 +150,7 @@ void block_impact(int index, int damage) {
 			case BLOCK_TYPE_GATLINGG:
 			case BLOCK_TYPE_NUKE:
 				block_destroy(index);
-				/* TODO: Powerup sound effect */
+				d_sound_play(ppt.ui.powerup_sound, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				return;
 			default:
 				if (ppt.tm->data[i] <= damage) {

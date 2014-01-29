@@ -51,6 +51,7 @@ struct ui {
 	DARNIT_SOUND		*block_hit;
 	DARNIT_SOUND		*block_explode;
 	DARNIT_SOUND		*bullet_shoot;
+	DARNIT_SOUND		*powerup_sound;
 
 	DARNIT_TILE		*special_tile;
 	int			special_tiles[9];
