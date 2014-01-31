@@ -55,6 +55,9 @@ struct ui {
 
 	DARNIT_TILE		*special_tile;
 	int			special_tiles[9];
+
+	int			mouse_x;
+	int			mouse_y;
 };
 
 

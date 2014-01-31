@@ -113,13 +113,24 @@ void ui_loop_playing() {
 	int js0_x, js0_y, angle, js1_y, y, x;
 	float a, b, t;
 	DARNIT_KEYS k;
+	DARNIT_MOUSE m;
 
 	if (ppt.ui.game_over)
 		return;
 	angle = ppt.ui.angle;
 	y = ppt.ui.turret_y;
 	d_joystick_get(&js0_x, &js0_y, NULL, &js1_y);
-	if (!js0_x && !js0_y) {
+	m = d_mouse_get();
+	if ((m.x != ppt.ui.mouse_x || m.y != ppt.ui.mouse_y) && m.x != 288) {
+		ppt.ui.mouse_x = m.x;
+		ppt.ui.mouse_y = m.y;
+		a = abs(m.x - 288);
+		b = m.y - 240;
+		t = b / a;
+		t = atanf(t);
+		t *= (1800.0f / M_PI);
+		ppt.ui.angle = t;
+	} else if (!js0_x && !js0_y) {
 		if (d_keys_get().left) {
 			ppt.ui.angle -= (d_last_frame_time());
 		} else if (d_keys_get().right) {
@@ -164,7 +175,7 @@ void ui_loop_playing() {
 	y = ppt.ui.turret_y + 12;
 	d_render_line_move(ppt.ui.aim_line, 0, x, y, (d_util_sin((900 + ppt.ui.angle)) * 1000) / 32768 + x, (d_util_sin(ppt.ui.angle) * 1000) / 32768 + y);
 	
-	if (d_keys_get().x) {
+	if (d_keys_get().x || d_keys_get().lmb) {
 		if (d_time_get() - ppt.ui.gatling_last < ppt.ui.gatling_reload_time)
 			return;
 		ppt.ui.gatling_last = d_time_get();
@@ -172,10 +183,11 @@ void ui_loop_playing() {
 		d_sound_play(ppt.ui.bullet_shoot, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 	}
 
-	if (d_keys_get().y) {
+	if (d_keys_get().y || d_keys_get().rmb) {
 		powerup_activate();
 		k = d_keys_zero();
 		k.y = 1;
+		k.rmb = 1;
 		d_keys_set(k);
 	}
 
