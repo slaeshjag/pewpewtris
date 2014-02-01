@@ -41,7 +41,7 @@ void ui_init_playing() {
 	ppt.ui.gatling_last = 0;
 	ppt.ui.nuke_going = 0;
 	ppt.bs_y = 0;
-	ppt.ui.gatling_reload_time = 500;
+	ppt.ui.gatling_reload_time = 300;
 
 	memset(ppt.tm->data, 0, sizeof(int) * ppt.tm->w * ppt.tm->h);
 	memset(ppt.tile_lookup, 0xFF, sizeof(int) * ppt.tm->w * ppt.tm->h);

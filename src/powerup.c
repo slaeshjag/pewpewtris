@@ -44,7 +44,7 @@ void powerup_spawn() {
 void powerup_add(int powerup) {
 	switch (powerup) {
 		case POWERUP_NUM_GATLINGG:
-			ppt.ui.gatling_reload_time -= 10;
+			ppt.ui.gatling_reload_time -= 40;
 			break;
 		default:
 			block_add_special_slot(powerup + 21);

@@ -30,7 +30,7 @@ void level_update() {
 
 	l = ppt.level.blocks / (ppt.level.level + 10) + 1;
 	if (l > ppt.level.level) ppt.level.level = l;
-	ppt.level.block_dy = 70 + ppt.level.level * 13;
+	ppt.level.block_dy = 140 + ppt.level.level * 13;
 
 	for (i = 0; i < BLOCK_TYPES; i++) {
 		if (ppt.level.level < block_cutoff[i]) {
