@@ -109,6 +109,9 @@ void bullet_move() {
 	int i, xv, yv, x, y;
 	unsigned int hit;
 
+	if (ppt.paused)
+		return;
+
 	for (i = 0; i < ppt.bullet.bullets; i++) {
 		if (ppt.bullet.bullet[i].mode != BULLET_MODE_FLYING)
 			continue;

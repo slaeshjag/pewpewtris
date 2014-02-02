@@ -34,6 +34,7 @@ struct ui {
 	DARNIT_TEXT_SURFACE	*level;
 	DARNIT_TEXT_SURFACE	*accur;
 	DARNIT_TEXT_SURFACE	*highscore;
+	DARNIT_TEXT_SURFACE	*pause_text;
 
 	DARNIT_MENU		*main_menu;
 	DARNIT_MENU		*highscore_name;
@@ -44,6 +45,7 @@ struct ui {
 	DARNIT_MAP		*highscore_background;
 
 	DARNIT_LINE		*aim_line;
+	DARNIT_TILE		*pause_bg;
 
 	DARNIT_SPRITE		*player;
 	DARNIT_SPRITE		*dragonbox;

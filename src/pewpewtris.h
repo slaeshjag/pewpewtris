@@ -38,6 +38,8 @@ struct {
 	struct block_particle		b_particle;
 	struct music			music;
 
+	int				paused;
+
 	/* TODO: Remove */
 	DARNIT_TEXT_SURFACE		*fps;
 } ppt;

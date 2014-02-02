@@ -97,6 +97,16 @@ void state_loop() {
 					}
 				} else if (d_time_get() - ppt.ui.game_over >= UI_GAME_OVER_DELAY)
 					ppt.state.new = STATE_NUM_HIGHSCORE;
+			} else if (ppt.paused) {
+				d_text_surface_draw(ppt.ui.pause_text);
+
+				if (d_keys_get().start) {
+					d_keys_set(d_keys_get());
+					ppt.paused = 0;
+				} else if (d_keys_get().select) {
+					d_keys_set(d_keys_get());
+					ppt.state.new = STATE_NUM_MAIN_MENU;
+				}
 			}
 			
 			d_render_blend_disable();

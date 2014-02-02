@@ -8,8 +8,10 @@ void ui_init() {
 	ppt.ui.score = d_text_surface_new(ppt.font, 64, 240, 560, 58);
 	ppt.ui.level = d_text_surface_new(ppt.font, 64, 240, 560, 130);
 	ppt.ui.accur = d_text_surface_new(ppt.font, 64, 240, 560, 202);
+	ppt.ui.pause_text = d_text_surface_new(ppt.font, 64, 450, 225, 200);
 	ppt.ui.highscore = d_text_surface_new(ppt.font, 512, 700, 110, 120);
 	ppt.ui.main_menu = d_menu_vertical_new("New  Game\nHighscore\n Options\n Credits\nQuit Game", 314, 120, ppt.font, 164, 23, 800);
+	d_text_surface_string_append(ppt.ui.pause_text, "Press START to continue\n  Press SELECT to quit\n");
 	ppt.ui.highscore_str[0] = 0;
 	ppt.ui.highscore_name = d_menu_textinput_new(216, 310, ppt.font, ppt.ui.highscore_str, 28, 360);
 	d_menu_shade_color(ppt.ui.main_menu, 0, 0, 0, 255);
@@ -42,6 +44,7 @@ void ui_init_playing() {
 	ppt.ui.nuke_going = 0;
 	ppt.bs_y = 0;
 	ppt.ui.gatling_reload_time = 300;
+	ppt.paused = 0;
 
 	memset(ppt.tm->data, 0, sizeof(int) * ppt.tm->w * ppt.tm->h);
 	memset(ppt.tile_lookup, 0xFF, sizeof(int) * ppt.tm->w * ppt.tm->h);
@@ -115,6 +118,9 @@ void ui_loop_playing() {
 	DARNIT_KEYS k;
 	DARNIT_MOUSE m;
 
+	if (ppt.paused)
+		return;
+	
 	if (ppt.ui.game_over)
 		return;
 	angle = ppt.ui.angle;
@@ -189,6 +195,11 @@ void ui_loop_playing() {
 		k.y = 1;
 		k.rmb = 1;
 		d_keys_set(k);
+	}
+
+	if (d_keys_get().start || d_keys_get().select) {
+		ppt.paused = 1;
+		d_keys_set(d_keys_get());
 	}
 
 	if (ppt.ui.nuke_going)
@@ -279,6 +290,6 @@ void ui_draw_stats() {
 	d_text_surface_draw(ppt.ui.score);
 	d_text_surface_draw(ppt.ui.level);
 	d_text_surface_draw(ppt.ui.accur);
-	
+
 	return;
 }

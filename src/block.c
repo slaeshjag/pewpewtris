@@ -265,6 +265,8 @@ void block_move() {
 
 
 void block_move_loop() {
+	if (ppt.paused)
+		return;
 	ppt.d_y += d_last_frame_time() * ppt.level.block_dy;
 	while (ppt.d_y >= 1000 && !ppt.ui.game_over) {
 		ppt.d_y -= 1000;
