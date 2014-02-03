@@ -158,7 +158,9 @@ void ui_loop_playing() {
 			ppt.ui.turret_y += d_last_frame_time() / 2;
 	} else {
 		js1_y *= 150;		/* 150 pix/sec max speed */
+		js1_y *= d_last_frame_time();
 		js1_y /= 32768;
+		js1_y /= 1000;
 		ppt.ui.turret_y += js1_y;
 	}
 
@@ -199,6 +201,8 @@ void ui_loop_playing() {
 
 	if (d_keys_get().start || d_keys_get().select) {
 		ppt.paused = 1;
+		if (ppt.music.entries)
+			d_sound_playback_volume_set(ppt.music.entry[ppt.music.cur].key, 0, 0);
 		d_keys_set(d_keys_get());
 	}
 
