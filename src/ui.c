@@ -220,7 +220,8 @@ void ui_loop_menu() {
 			ppt.state.new = STATE_NUM_HIGHSCORE;
 			break;
 		case 2:	/* Options */
-			d_menu_selection_wait(ppt.ui.main_menu);
+			ppt.state.new = STATE_NUM_SETTINGS;
+			break;
 		case 3:	/* Credits */
 			ppt.state.new = STATE_NUM_CREDITS;
 			break;
@@ -235,6 +236,46 @@ void ui_loop_menu() {
 
 
 	/* TODO: Play sound on menu selection change */
+
+	return;
+}
+
+
+void ui_settings_create() {
+	char str[1024];
+
+	sprintf(str, "Music [%s]\nSound [%s]\n<-- Back", ppt.config.music_vol ? "ON" : "OFF", ppt.config.sfx_vol ? "ON" : "OFF");
+	ppt.ui.options_menu = d_menu_vertical_new(str, 314, 120, ppt.font, 164, 10, 800);
+	d_menu_shade_color(ppt.ui.options_menu, 0, 0, 0, 255);
+
+	return;
+}
+
+
+void ui_loop_settings() {
+	if (!ppt.ui.options_menu)
+		return;
+	switch (d_menu_loop(ppt.ui.options_menu)) {
+		case 0:
+			ppt.config.music_vol = ppt.config.music_vol ? 0 : 40;
+			if (ppt.music.entries)
+				d_sound_playback_volume_set(ppt.music.entry[ppt.music.cur].key, ppt.config.music_vol, ppt.config.music_vol);
+			break;
+		case 1:
+			ppt.config.sfx_vol = ppt.config.sfx_vol ? 0 : 31;
+			break;
+		case -1:
+			return;
+		case 2:
+		default:
+			ppt.ui.options_menu = d_menu_free(ppt.ui.options_menu);
+			config_save();
+			ppt.state.new = STATE_NUM_MAIN_MENU;
+			return;
+	}
+
+	ppt.ui.options_menu = d_menu_free(ppt.ui.options_menu);
+	ui_settings_create(ppt.ui.options_menu);
 
 	return;
 }

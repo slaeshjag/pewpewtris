@@ -29,6 +29,9 @@ void state_loop() {
 					block_particle_reset();
 					level_init();
 					break;
+				case STATE_NUM_SETTINGS:
+					ui_settings_create();
+					break;
 				case STATE_NUM_NEW_HIGHSCORE:
 					if (!highscore_is_new())
 						ppt.state.new = STATE_NUM_HIGHSCORE;
@@ -109,6 +112,12 @@ void state_loop() {
 				}
 			}
 			
+			d_render_blend_disable();
+			break;
+		case STATE_NUM_SETTINGS:
+			d_tilemap_draw(ppt.ui.menu_background->layer[0].tilemap);
+			d_render_blend_enable();
+			ui_loop_settings();
 			d_render_blend_disable();
 			break;
 		case STATE_NUM_HIGHSCORE:

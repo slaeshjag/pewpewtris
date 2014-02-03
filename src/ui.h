@@ -38,6 +38,7 @@ struct ui {
 
 	DARNIT_MENU		*main_menu;
 	DARNIT_MENU		*highscore_name;
+	DARNIT_MENU		*options_menu;
 	char			highscore_str[32];
 
 	DARNIT_MAP		*play_background;
@@ -66,9 +67,11 @@ struct ui {
 void ui_init();
 void ui_init_playing();
 void ui_init_highscore();
+void ui_settings_create();
 void ui_init_credits();
 void ui_init_mainmenu();
 void ui_loop_menu();
+void ui_loop_settings();
 void ui_loop_playing();
 void ui_loop_highscore();
 void ui_loop_credits();
