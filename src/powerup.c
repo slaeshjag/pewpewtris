@@ -35,7 +35,8 @@ void powerup_spawn() {
 	for (i = 0; i < POWERUP_COUNT; i++)
 		if (powerup_threshold[i] < miss_ratio)
 			break;
-	t = rand() % i;
+	t = rand() % (i * 128);
+	t /= 128;
 	powerup_attempt_spawn(t + POWERUP_BASE);
 	return;
 }
