@@ -8,12 +8,13 @@
 #define	POWERUP_LIKELY_SPAWN	10
 
 #define	POWERUP_BASE		21
-#define	POWERUP_COUNT		2
+#define	POWERUP_COUNT		3
 
 
 #ifdef REQUIRE_POWERUP_DATA
 static const int powerup_threshold[] = {
-	700,			/* Gatling gun */
+	700,			/* More rapid fire */
+	600,			/* Filler powerup */
 	100,			/* Nuke */
 };
 #endif
@@ -21,6 +22,7 @@ static const int powerup_threshold[] = {
 
 enum powerup_num {
 	POWERUP_NUM_GATLINGG,
+	POWERUP_NUM_FILLER,
 	POWERUP_NUM_NUKE,
 };
 
@@ -28,6 +30,7 @@ enum powerup_num {
 void powerup_spawn();
 void powerup_add(int powerup);
 void powerup_nuke_do();
+void powerup_filler_do();
 void powerup_activate();
 
 #endif

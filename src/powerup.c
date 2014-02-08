@@ -76,14 +76,50 @@ void powerup_nuke_do() {
 }
 
 
+void powerup_filler_do() {
+	int i, j, a, b, x, y;
+	unsigned int c;
+
+	for (i = 0; i < 18; i++) {
+		a = b = c = 0;
+		for (j = 0; j < 10; j++) {
+			if (!ppt.tm->data[i * 10 + j]) {
+				if (!b)
+					a = 1, c++;
+				else
+					a++;
+			} else if (a)
+				b = 1;
+		}
+
+		if (a == 1 && c <3)
+			for (j = 0; j < 10; j++)
+				if (!ppt.tm->data[i * 10 + j]) {
+					x = j * 24;
+					y = i * 24;
+					if (d_bbox_test(ppt.bbox,x, y, 24, 24, &c, 1))
+						continue;
+					c = d_bbox_add(ppt.bbox, x, y, 24, 24);
+					/* Set filler */
+					ppt.tm->data[i * 10 + j] = 5;
+					ppt.tile_lookup[c] = i * 10 + j;
+				}
+	}
+
+	d_tilemap_recalc(ppt.tm);
+	return;
+}
+
+
 void powerup_activate() {
 	int t;
 
 	t = block_pop_special_slot() - 21;
-	if (t == 1) {	/* Nuke */
+	if (t == POWERUP_NUM_NUKE) {	/* Nuke */
 		if (ppt.ui.nuke_going)
 			return;
 		ppt.ui.nuke_going = 1;
-	}
+	} else if (t == POWERUP_NUM_FILLER)
+		powerup_filler_do();
 	return;
 }

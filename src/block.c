@@ -69,7 +69,7 @@ void block_check_line() {
 
 	for (i = 0; i < 18; i++) {
 		for (j = 0; j < 10; j++)
-			if (!ppt.tm->data[i * 10 + j])
+			if (!ppt.tm->data[i * 10 + j] || ppt.tm->data[i * 10 + j] == BLOCK_TYPE_FILLER)
 				break;
 		if (ppt.tm->data[i * 10] == BLOCK_TYPE_SOLID)
 			continue;
@@ -84,12 +84,13 @@ void block_check_line() {
 
 
 void block_destroy(int index) {
-	int i, j, k, f, x, y, r, g, b;
+	int i, j, k, f, x, y, r, g, b, t;
 
 	i = ppt.tile_lookup[index];
 	if (i >= 0) {
 		x = ppt.tile_lookup[index] % 10;
 		y = ppt.tile_lookup[index] / 10;
+		t = ppt.tm->data[i];
 		block_color(ppt.tm->data[i] & 0xFF, &r, &g, &b);
 		block_particle_trig(x * 24 + 12, y * 24 + 12, r, g, b);
 		if (ppt.tm->data[ppt.tile_lookup[index]] >= POWERUP_BASE)
@@ -104,6 +105,7 @@ void block_destroy(int index) {
 				for (k = b = 0; b != i; k++)
 					if (ppt.falling.blocks[k])
 						b++;
+				t = ppt.falling.blocks[k - 1] & 0xFF;
 				block_color(ppt.falling.blocks[k - 1] & 0xFF, &r, &g, &b);
 				block_particle_trig(ppt.falling.x[i] + 12, ppt.falling.y[i] + 12, r, g, b);
 				ppt.falling.box_id[i] = -1, j = i;
@@ -129,7 +131,8 @@ void block_destroy(int index) {
 
 	/* Add points */
 	ppt.level.blocks++;
-	ppt.ui.score_n += 150 + 50 * ppt.level.level;
+	if (t != BLOCK_TYPE_FILLER)
+		ppt.ui.score_n += 150 + 50 * ppt.level.level;
 	ppt.ui.redraw = 1;
 	powerup_spawn();
 	level_update();
@@ -138,7 +141,7 @@ void block_destroy(int index) {
 }
 
 
-void block_impact(int index, int damage) {
+int block_impact(int index, int damage) {
 	int i, j, k, l, f;
 
 	i = ppt.tile_lookup[index];
@@ -146,12 +149,16 @@ void block_impact(int index, int damage) {
 	if (i >= 0) {
 		switch (ppt.tm->data[i]) {
 			case BLOCK_TYPE_SOLID:
-				return;
+				ppt.level.bullet_miss++;
+				return 1;
 			case BLOCK_TYPE_GATLINGG:
 			case BLOCK_TYPE_NUKE:
+			case BLOCK_TYPE_PFILLER:
 				block_destroy(index);
 				d_sound_play(ppt.ui.powerup_sound, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
-				return;
+			case BLOCK_TYPE_FILLER:
+				block_destroy(index);
+				return 0;
 			default:
 				if (ppt.tm->data[i] <= damage) {
 					d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
@@ -194,7 +201,7 @@ void block_impact(int index, int damage) {
 	ppt.ui.score_n += 10 * ppt.level.level;
 	ppt.ui.redraw = 1;
 
-	return;
+	return 1;
 }
 
 

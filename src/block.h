@@ -9,9 +9,11 @@ enum block_type {
 	BLOCK_TYPE_2		= 2,
 	BLOCK_TYPE_3		= 3,
 	BLOCK_TYPE_4		= 4,
+	BLOCK_TYPE_FILLER	= 5,
 	BLOCK_TYPE_SOLID	= 20,
 	BLOCK_TYPE_GATLINGG	= 21,
-	BLOCK_TYPE_NUKE		= 22,
+	BLOCK_TYPE_PFILLER	= 22,
+	BLOCK_TYPE_NUKE		= 23,
 };
 
 #ifdef REQUIRE_DATA
@@ -74,6 +76,7 @@ static unsigned char block_color_a[] = {
 	255, 0, 255, 255,
 	255, 0, 0, 255,
 	219, 219, 0, 255,
+	0, 0, 0, 255
 };
 
 
@@ -101,7 +104,7 @@ void block_move();
 void block_move_loop();
 void block_get_new();
 void block_destroy(int index);
-void block_impact(int index, int damage);
+int block_impact(int index, int damage);
 
 void block_add_special_slot(int i);
 int block_pop_special_slot();

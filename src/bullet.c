@@ -135,8 +135,8 @@ void bullet_move() {
 				bullet_eczplode(i, x, y);
 				continue;
 			} else if (d_bbox_test(ppt.bbox, x, y, 5, 5, &hit, 1) > 0) {
-				bullet_eczplode(i, x, y);
-				block_impact(hit, 1);
+				if (block_impact(hit, 1))
+					bullet_eczplode(i, x, y);
 				/* TODO: Tell the block about the bad news */
 
 				continue;
