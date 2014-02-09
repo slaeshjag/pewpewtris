@@ -58,6 +58,20 @@ void powerup_add(int powerup) {
 }
 
 
+void powerup_stairbomb_do() {
+	int i, blocks;
+	unsigned block[180];
+
+	blocks = d_bbox_test(ppt.bbox, 0, 0, 1000, 1000, block, 180);
+	for (i = 0; i < blocks; i += 3) {
+		d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
+		block_destroy(block[i]);
+	}
+
+	return;
+}
+
+
 void powerup_nuke_do() {
 	int i, blocks;
 	unsigned int block[2];
@@ -121,5 +135,7 @@ void powerup_activate() {
 		ppt.ui.nuke_going = 1;
 	} else if (t == POWERUP_NUM_FILLER)
 		powerup_filler_do();
+	else if (t == POWERUP_NUM_STAIRBOMB)
+		powerup_stairbomb_do();
 	return;
 }
