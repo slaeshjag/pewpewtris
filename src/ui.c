@@ -25,6 +25,7 @@ void ui_init() {
 	ppt.ui.block_explode = d_sound_streamed_load("sounds/block_destroy.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
 	ppt.ui.bullet_shoot = d_sound_streamed_load("sounds/bullet_shoot.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
 	ppt.ui.powerup_sound = d_sound_streamed_load("sounds/powerup.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
+	ppt.ui.shift_sound = d_sound_streamed_load("sounds/shift.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
 
 	return;
 }

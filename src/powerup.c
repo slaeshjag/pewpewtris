@@ -1,5 +1,6 @@
 #define	REQUIRE_POWERUP_DATA
 #include "pewpewtris.h"
+#include <string.h>
 
 
 /* This only *attempts* to spawn a powerup */
@@ -54,6 +55,33 @@ void powerup_add(int powerup) {
 			break;
 	}
 
+	return;
+}
+
+
+void powerup_shifty_do() {
+	int i, blocks, id;
+	unsigned block[180];
+
+		
+	d_sound_play(ppt.ui.shift_sound, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
+	blocks = d_bbox_test(ppt.bbox, 0, 0, 1000, 1000, block, 180);
+	for (i = 0; i < blocks; i++) {
+		if (ppt.tile_lookup[block[i]] < 0)
+			continue;
+		id = ppt.tile_lookup[block[i]];
+		if (ppt.tile_lookup[block[i]] >= 140) {
+			block_destroy(block[i]);
+			continue;
+		}
+		
+		ppt.tile_lookup[block[i]] += 40;
+		d_bbox_move(ppt.bbox, block[i], (id % 10) * 24, (id / 10 + 4) * 24);
+	}
+
+	memmove(&ppt.tm->data[40], ppt.tm->data, 140 * 4);
+	memset(ppt.tm->data, 0, 40 * 4);
+	d_tilemap_recalc(ppt.tm);
 	return;
 }
 
@@ -137,5 +165,7 @@ void powerup_activate() {
 		powerup_filler_do();
 	else if (t == POWERUP_NUM_STAIRBOMB)
 		powerup_stairbomb_do();
+	else if (t == POWERUP_NUM_SHIFTER)
+		powerup_shifty_do();
 	return;
 }
