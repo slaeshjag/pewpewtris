@@ -29,7 +29,7 @@ void level_init() {
 void level_update() {
 	int i, l;
 
-	l = ppt.level.blocks / (ppt.level.level + 10) + 1;
+	l = ppt.level.blocks / (ppt.level.level * 3 + 10) + 1;
 	if (l > ppt.level.level) ppt.level.level = l;
 	ppt.level.block_dy = 140 + ppt.level.level * 13;
 

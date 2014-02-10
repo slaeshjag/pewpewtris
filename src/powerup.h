@@ -4,7 +4,7 @@
 
 /* How many percent accuracy before powerups are even enabled */
 /* This is actually the miss ratio */
-#define	POWERUP_THRESHOLD	700
+#define	POWERUP_THRESHOLD	300
 #define	POWERUP_LIKELY_SPAWN	10
 
 #define	POWERUP_BASE		21
@@ -13,10 +13,10 @@
 
 #ifdef REQUIRE_POWERUP_DATA
 static const int powerup_threshold[] = {
-	700,			/* More rapid fire */
-	600,			/* Filler powerup */
-	500,			/* Shifter */
-	400,			/* Stair bomb */
+	300,			/* More rapid fire */
+	250,			/* Filler powerup */
+	200,			/* Shifter */
+	150,			/* Stair bomb */
 	100,			/* Nuke */
 };
 #endif
