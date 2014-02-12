@@ -13,19 +13,27 @@
 
 #ifdef REQUIRE_POWERUP_DATA
 static const int powerup_threshold[] = {
-	300,			/* More rapid fire */
-	250,			/* Filler powerup */
-	200,			/* Shifter */
+	300,			/* Filler powerup */
+	250,			/* Shifter */
+	200,			/* More rapid fire */
 	150,			/* Stair bomb */
 	100,			/* Nuke */
+};
+
+static const int powerup_likely[] = {
+	200,
+	100,
+	500,
+	300,
+	100,
 };
 #endif
 
 
 enum powerup_num {
-	POWERUP_NUM_GATLINGG,
 	POWERUP_NUM_FILLER,
 	POWERUP_NUM_SHIFTER,
+	POWERUP_NUM_GATLINGG,
 	POWERUP_NUM_STAIRBOMB,
 	POWERUP_NUM_NUKE,
 };

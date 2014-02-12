@@ -20,7 +20,7 @@ void powerup_attempt_spawn(int block) {
 
 
 void powerup_spawn() {
-	int miss_ratio, t, i;
+	int miss_ratio, t, i, l;
 
 	if (ppt.level.level <3)
 		return;
@@ -32,13 +32,17 @@ void powerup_spawn() {
 		return;
 	if (rand() % POWERUP_LIKELY_SPAWN)
 		return;
-
-	for (i = 0; i < POWERUP_COUNT; i++)
+	
+	for (i = l = 0; i < POWERUP_COUNT; i++) {
 		if (powerup_threshold[i] < miss_ratio)
 			break;
-	t = rand() % (i * 128);
-	t /= 128;
+		l += powerup_likely[i];
+	}
+
+	l = rand() % l;
+	for (t = 0; l > powerup_likely[t]; t++, l -= powerup_likely[t]);
 	powerup_attempt_spawn(t + POWERUP_BASE);
+
 	return;
 }
 
