@@ -24,6 +24,7 @@ struct bullet_entry {
 	int			x;
 	int			y;
 	int			age;
+	int			hp;
 	enum bullet_mode	mode;
 	DARNIT_PARTICLE		*tail;
 	DARNIT_PARTICLE		*impact;

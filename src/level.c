@@ -19,6 +19,7 @@ void level_init() {
 	ppt.level.level = 1;
 	ppt.d_y = 0;
 	ppt.level.bullet_total = ppt.level.bullet_miss = 0;
+	ppt.level.bullet_hp = 1;
 	level_update();
 //	block_add_special_slot(23);
 	

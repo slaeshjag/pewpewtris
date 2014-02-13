@@ -135,7 +135,8 @@ void bullet_move() {
 				bullet_eczplode(i, x, y);
 				continue;
 			} else if (d_bbox_test(ppt.bbox, x, y, 5, 5, &hit, 1) > 0) {
-				if (block_impact(hit, 1))
+				ppt.bullet.bullet[i].hp -= block_impact(hit, ppt.bullet.bullet[i].hp);
+				if (!ppt.bullet.bullet[i].hp)
 					bullet_eczplode(i, x, y);
 				/* TODO: Tell the block about the bad news */
 
@@ -179,6 +180,7 @@ void bullet_fire(int type, int angle, int velocity, int x, int y) {
 	ppt.bullet.bullet[i].y = y * 1000;
 	ppt.bullet.bullet[i].rest_movement = 0;
 	ppt.bullet.bullet[i].age = 0;
+	ppt.bullet.bullet[i].hp = ppt.level.bullet_hp;
 
 	d_particle_mode(ppt.bullet.bullet[i].tail, DARNIT_PARTICLE_MODE_SHOWER);
 	d_particle_emitter_angle(ppt.bullet.bullet[i].impact, angle - 20 + 3600, angle + 20);

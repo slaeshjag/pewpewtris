@@ -142,7 +142,7 @@ void block_destroy(int index) {
 
 
 int block_impact(int index, int damage) {
-	int i, j, k, l, f;
+	int i, j, k, l, f, hp_used = 0;
 
 	i = ppt.tile_lookup[index];
 
@@ -150,22 +150,25 @@ int block_impact(int index, int damage) {
 		switch (ppt.tm->data[i]) {
 			case BLOCK_TYPE_SOLID:
 				ppt.level.bullet_miss++;
-				return 1;
+				return damage;
 			case BLOCK_TYPE_GATLINGG:
 			case BLOCK_TYPE_NUKE:
 			case BLOCK_TYPE_PFILLER:
 				block_destroy(index);
 				d_sound_play(ppt.ui.powerup_sound, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
+				return 1;
 			case BLOCK_TYPE_FILLER:
 				block_destroy(index);
 				return 0;
 			default:
 				if (ppt.tm->data[i] <= damage) {
+					hp_used = ppt.tm->data[i];
 					d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 					block_destroy(index);
 				} else {
 					d_sound_play(ppt.ui.block_hit, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 					ppt.tm->data[i] -= damage;
+					hp_used = damage;
 					d_tilemap_recalc(ppt.tm);
 				}
 
@@ -186,9 +189,11 @@ int block_impact(int index, int damage) {
 		i--;
 		if (i >= 0) {
 			if (ppt.falling.blocks[i] <= damage) {
+				hp_used = ppt.falling.blocks[i];
 				d_sound_play(ppt.ui.block_explode, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				block_destroy(index);
 			} else {
+				hp_used = damage;
 				d_sound_play(ppt.ui.block_hit, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				ppt.falling.blocks[i] -= damage;
 				d_render_tile_set(ppt.tile, l, ppt.falling.blocks[i]);
@@ -201,7 +206,7 @@ int block_impact(int index, int damage) {
 	ppt.ui.score_n += 10 * ppt.level.level;
 	ppt.ui.redraw = 1;
 
-	return 1;
+	return hp_used;
 }
 
 

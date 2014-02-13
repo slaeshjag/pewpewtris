@@ -8,6 +8,7 @@ struct level {
 
 	int			bullet_miss;
 	int			bullet_total;
+	int			bullet_hp;
 	
 	unsigned int		block_likely[BLOCK_TYPES + 1];
 };

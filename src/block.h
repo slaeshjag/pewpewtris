@@ -104,7 +104,7 @@ void block_move();
 void block_move_loop();
 void block_get_new();
 void block_destroy(int index);
-int block_impact(int index, int damage);
+int block_impact(int index, int hp);
 
 void block_add_special_slot(int i);
 int block_pop_special_slot();

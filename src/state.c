@@ -104,11 +104,13 @@ void state_loop() {
 				d_text_surface_draw(ppt.ui.pause_text);
 
 				if (d_keys_get().start) {
-					d_sound_playback_volume_set(ppt.music.entry[ppt.music.cur].key, ppt.config.music_vol, ppt.config.music_vol);
+					if (ppt.music.entries > 0)
+						d_sound_playback_volume_set(ppt.music.entry[ppt.music.cur].key, ppt.config.music_vol, ppt.config.music_vol);
 					d_keys_set(d_keys_get());
 					ppt.paused = 0;
 				} else if (d_keys_get().select) {
-					d_sound_playback_volume_set(ppt.music.entry[ppt.music.cur].key, ppt.config.music_vol, ppt.config.music_vol);
+					if (ppt.music.entries > 0)
+						d_sound_playback_volume_set(ppt.music.entry[ppt.music.cur].key, ppt.config.music_vol, ppt.config.music_vol);
 					d_keys_set(d_keys_get());
 					ppt.state.new = STATE_NUM_MAIN_MENU;
 				}
