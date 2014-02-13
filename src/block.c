@@ -151,9 +151,12 @@ int block_impact(int index, int damage) {
 			case BLOCK_TYPE_SOLID:
 				ppt.level.bullet_miss++;
 				return damage;
-			case BLOCK_TYPE_GATLINGG:
-			case BLOCK_TYPE_NUKE:
 			case BLOCK_TYPE_PFILLER:
+			case BLOCK_TYPE_SHIFTER:
+			case BLOCK_TYPE_GATLINGG:
+			case BLOCK_TYPE_STAIRBOMB:
+			case BLOCK_TYPE_BULLETHP:
+			case BLOCK_TYPE_NUKE:
 				block_destroy(index);
 				d_sound_play(ppt.ui.powerup_sound, 0, UI_SOUND_VOLUME, UI_SOUND_VOLUME, 0);
 				return 1;

@@ -54,6 +54,9 @@ void powerup_add(int powerup) {
 			if (ppt.ui.gatling_reload_time < 40)
 				ppt.ui.gatling_reload_time = 40;
 			break;
+		case POWERUP_NUM_BULLET_HP:
+			ppt.level.bullet_hp++;
+			break;
 		default:
 			block_add_special_slot(powerup + 21);
 			break;

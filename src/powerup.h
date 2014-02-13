@@ -17,6 +17,7 @@ static const int powerup_threshold[] = {
 	250,			/* Shifter */
 	200,			/* More rapid fire */
 	150,			/* Stair bomb */
+	125,			/* bullet HP */
 	100,			/* Nuke */
 };
 
@@ -25,6 +26,7 @@ static const int powerup_likely[] = {
 	100,
 	500,
 	300,
+	150,
 	100,
 };
 #endif
@@ -35,6 +37,7 @@ enum powerup_num {
 	POWERUP_NUM_SHIFTER,
 	POWERUP_NUM_GATLINGG,
 	POWERUP_NUM_STAIRBOMB,
+	POWERUP_NUM_BULLET_HP,
 	POWERUP_NUM_NUKE,
 };
 
