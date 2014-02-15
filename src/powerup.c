@@ -30,7 +30,7 @@ void powerup_spawn() {
 	miss_ratio = ppt.level.bullet_miss * 1000 / ppt.level.bullet_total;
 	if (miss_ratio > POWERUP_THRESHOLD)
 		return;
-	if (rand() % POWERUP_LIKELY_SPAWN)
+	if (rand() % (POWERUP_LIKELY_SPAWN - (10 - miss_ratio / 10)))
 		return;
 	
 	for (i = l = 0; i < POWERUP_COUNT; i++) {
