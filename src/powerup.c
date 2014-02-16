@@ -41,6 +41,8 @@ void powerup_spawn() {
 
 	l = rand() % l;
 	for (t = 0; l > powerup_likely[t]; t++, l -= powerup_likely[t]);
+	if (t == POWERUP_NUM_GATLINGG && ppt.ui.gatling_reload_time < 40)
+		return;
 	powerup_attempt_spawn(t + POWERUP_BASE);
 
 	return;
