@@ -24,8 +24,8 @@ static const int powerup_threshold[] = {
 static const int powerup_likely[] = {
 	200,
 	100,
-	500,
 	300,
+	250,
 	150,
 	100,
 };
