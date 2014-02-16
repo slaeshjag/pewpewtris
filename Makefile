@@ -17,12 +17,13 @@ pandora: default
 	@echo " [ PND] pewpewtris.pnd"
 	@cp -f release_data/pewpewtris_pandora.sh bin/
 	@cp -f release_data/PXML.xml bin/
+	@cp -f release_data/icon.png bin/
 	@cp -f /usr/local/angstrom/arm/arm-angstrom-linux-gnueabi/usr/lib/libdarnit.so bin/
 	@rm -f pewpewtris.pnd
 	@cp -f release_data/pewpewtris4.png bin/
 	@mksquashfs bin/* pewpewtris.pnd >/dev/null
 	@cat bin/PXML.xml >> pewpewtris.pnd
-	@#@cat bin/icon.png >> pewpewtris.pnd
+	@@cat bin/icon.png >> pewpewtris.pnd
 	@echo 
 
 
