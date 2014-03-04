@@ -137,7 +137,6 @@ void state_loop() {
 			break;
 		case STATE_NUM_CREDITS:
 			d_tilemap_draw(ppt.ui.highscore_background->layer[0].tilemap);
-			d_sprite_draw(ppt.ui.dragonbox);
 			d_render_blend_enable();
 			ui_loop_credits();
 			d_render_blend_disable();

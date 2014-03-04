@@ -18,7 +18,6 @@ void ui_init() {
 
 	ppt.ui.player = d_sprite_load("res/turret.spr", 0, DARNIT_PFORMAT_RGB5A1);
 	ppt.ui.special_tile = d_render_tile_new(9, ppt.block);
-	ppt.ui.dragonbox = d_sprite_load("res/dragonbox.spr", 0, DARNIT_PFORMAT_RGB5A1);
 
 	ppt.ui.aim_line = d_render_line_new(1, 1);
 	ppt.ui.block_hit = d_sound_streamed_load("sounds/block_hit.ogg", DARNIT_AUDIO_PRELOAD, DARNIT_AUDIO_MONO);
@@ -105,7 +104,6 @@ void ui_init_credits() {
 
 
 void ui_init_mainmenu() {
-	d_sprite_move(ppt.ui.dragonbox, 0, 464);
 	d_menu_selection_wait(ppt.ui.main_menu);
 
 	return;
